@@ -1,0 +1,188 @@
+.hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: linear-gradient(180deg, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 80%, transparent 100%);
+  z-index: 100;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+.hud-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.hud-center {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-label {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: rgba(200, 190, 160, 0.6);
+  letter-spacing: 1px;
+}
+
+.hud-value {
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  color: var(--horror-gold);
+  text-shadow: 0 0 6px rgba(201, 168, 76, 0.4);
+}
+
+/* HP Hearts */
+.hp-hearts {
+  display: flex;
+  gap: 2px;
+}
+
+.heart {
+  color: var(--horror-blood);
+  font-size: 16px;
+  text-shadow: 0 0 6px rgba(204, 0, 0, 0.6);
+  animation: heartBeat 1s ease-in-out infinite;
+}
+
+.heart-empty {
+  color: rgba(100, 80, 60, 0.4);
+  font-size: 16px;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Status badges */
+.hud-status {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+  animation: statusPulse 1.5s ease-in-out infinite;
+}
+
+.status-freeze {
+  background: rgba(100, 200, 255, 0.15);
+  border: 1px solid rgba(100, 200, 255, 0.4);
+  color: #88ccff;
+}
+
+.status-confuse {
+  background: rgba(255, 200, 50, 0.15);
+  border: 1px solid rgba(255, 200, 50, 0.4);
+  color: #ffcc44;
+}
+
+.status-safe {
+  background: rgba(100, 255, 100, 0.15);
+  border: 1px solid rgba(100, 255, 100, 0.4);
+  color: #66ff66;
+}
+
+.status-moves {
+  background: rgba(200, 100, 255, 0.15);
+  border: 1px solid rgba(200, 100, 255, 0.4);
+  color: #cc88ff;
+}
+
+.status-mission {
+  background: rgba(255, 150, 50, 0.15);
+  border: 1px solid rgba(255, 150, 50, 0.4);
+  color: #ffaa44;
+}
+
+.status-carry {
+  background: rgba(50, 200, 255, 0.15);
+  border: 1px solid rgba(50, 200, 255, 0.5);
+  color: #44ccff;
+  animation: statusPulse 1s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hud {
+    padding: 6px 12px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .hud-section {
+    gap: 10px;
+  }
+
+  .hud-label {
+    font-size: 6px;
+  }
+
+  .hud-value {
+    font-size: 10px;
+  }
+
+  .heart, .heart-empty {
+    font-size: 13px;
+  }
+
+  .hud-status {
+    font-size: 6px;
+    padding: 3px 6px;
+  }
+
+  .hud-center {
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hud {
+    padding: 4px 8px;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .hud-right {
+    display: none;
+  }
+
+  .hud-section {
+    gap: 6px;
+  }
+
+  .hud-label {
+    font-size: 5px;
+  }
+
+  .hud-value {
+    font-size: 8px;
+  }
+
+  .heart, .heart-empty {
+    font-size: 11px;
+  }
+
+  .hud-status {
+    font-size: 5px;
+    padding: 2px 4px;
+  }
+}

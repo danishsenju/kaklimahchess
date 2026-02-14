@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Seri Muka pixel art - green pandan layer bottom, white glutinous rice top -->
+  <rect x="8" y="8" width="48" height="48" rx="4" fill="#2a5a1a"/>
+  <!-- Rice layer -->
+  <rect x="10" y="10" width="44" height="22" rx="2" fill="#f5f0e0"/>
+  <rect x="12" y="12" width="40" height="18" fill="#ebe5d0"/>
+  <!-- Pandan layer -->
+  <rect x="10" y="32" width="44" height="22" rx="2" fill="#3a8a2a"/>
+  <rect x="12" y="34" width="40" height="18" fill="#2d7a1d"/>
+  <!-- Pixel details -->
+  <rect x="14" y="14" width="4" height="4" fill="#f0ead8" opacity="0.5"/>
+  <rect x="22" y="16" width="4" height="4" fill="#f0ead8" opacity="0.3"/>
+  <rect x="36" y="12" width="4" height="4" fill="#f0ead8" opacity="0.4"/>
+  <rect x="16" y="38" width="4" height="4" fill="#35921f" opacity="0.5"/>
+  <rect x="28" y="40" width="4" height="4" fill="#35921f" opacity="0.3"/>
+  <rect x="40" y="36" width="4" height="4" fill="#35921f" opacity="0.4"/>
+  <!-- Sparkle -->
+  <rect x="30" y="4" width="4" height="4" fill="#ffee88"/>
+  <rect x="28" y="6" width="2" height="2" fill="#ffee88" opacity="0.6"/>
+  <rect x="34" y="6" width="2" height="2" fill="#ffee88" opacity="0.6"/>
+</svg>

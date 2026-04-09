@@ -1,36 +1,89 @@
 import React from 'react'
 import {
-  BOARD_SIZE, BOARD_LAYOUT, HOME_POS,
+  BOARD_SIZE,
   HUSIN_SPRITES, LIMAH_SPRITES, POWERUP_SPRITES,
   TEMPAT_SELAMAT_IMG, USOP_WILCHA_IMG, POKOK_IMG,
   FLAG_TOLONG_IMG, BOMOH_FULLBODY_IMG, BOMOH_PENGSAN_IMG,
-  DIR,
+  SELIPAR_JEPUN_IMG, HUSIN_SELIPAR_IMG, KUBUR_IMG, LUMUT_IMG, RUMPUT_IMG, TANAH_IMG,
 } from '../constants'
 import './GameBoard.css'
 
 const TILE_CLASSES = ['grass', 'mud', 'moss', 'dark', 'home', 'tree', 'grave'];
 const COL_LABELS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-export default function GameBoard({ state, onMove }) {
+export default function GameBoard({ state, lumutSlideOverride }) {
   const {
     player, ghost, usop, carryingUsop, powerups,
     ghostFrozen, ghostConfused, playerAtHome,
     flag, bomoh, bomohDead, limahTargetBomoh, showSmoke,
+    selipar, hasSelipar, extraTrees, homePos,
+    graveJumpChoices, movesLeft, boardLayout,
   } = state;
 
+  // During lumut slide: override where Husin is rendered
+  const displayPlayer = lumutSlideOverride
+    ? { ...player, row: lumutSlideOverride.pos.row, col: lumutSlideOverride.pos.col }
+    : player;
+  const isSliding = lumutSlideOverride?.phase === 'sliding';
+  const isOnLumut = lumutSlideOverride?.phase === 'on-lumut';
+
+  // Compute valid move tiles (chess-style highlights)
+  const validMoveTiles = new Set();
+  const graveTargetTiles = new Set();
+
+  if (graveJumpChoices) {
+    graveJumpChoices.forEach(g => graveTargetTiles.add(`${g.row}-${g.col}`));
+  } else if (!hasSelipar && movesLeft > 0 && !state.gameOver && !state.win) {
+    const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    dirs.forEach(([dr, dc]) => {
+      const nr = player.row + dr;
+      const nc = player.col + dc;
+      if (nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE) {
+        const tileType = boardLayout[nr][nc];
+        if (tileType !== 5) {
+          const blocked = extraTrees && extraTrees.some(t => t.row === nr && t.col === nc);
+          if (!blocked) validMoveTiles.add(`${nr}-${nc}`);
+        }
+      }
+    });
+  }
+
   const renderTile = (row, col) => {
-    const tileType = BOARD_LAYOUT[row][col];
+    const tileType = boardLayout[row][col];
     const tileClass = TILE_CLASSES[tileType] || 'grass';
-    const isHomeTile = row === HOME_POS.row && col === HOME_POS.col;
+    const isHomeTile = homePos && row === homePos.row && col === homePos.col;
     const isObstacle = tileType === 5;
     const isEven = (row + col) % 2 === 0;
+    const key = `${row}-${col}`;
+    const isValidMove = validMoveTiles.has(key);
+    const isGraveTarget = graveTargetTiles.has(key);
 
     return (
       <div
-        key={`${row}-${col}`}
+        key={key}
         className={`tile tile-${tileClass} ${isEven ? 'tile-even' : 'tile-odd'}`}
       >
         <div className="tile-texture" />
+
+        {/* Rumput (grass type-0) base image */}
+        {tileType === 0 && (
+          <div className="rumput-decoration">
+            <img src={RUMPUT_IMG} alt="" className="rumput-img" />
+          </div>
+        )}
+
+        {/* Tanah base for kubur portal (type-6) — glow kubur rendered below on top */}
+        {tileType === 6 && (
+          <div className="tanah-decoration">
+            <img src={TANAH_IMG} alt="" className="tanah-img" />
+          </div>
+        )}
+
+        {/* Valid move highlight */}
+        {isValidMove && <div className="tile-highlight-valid" />}
+
+        {/* Grave portal target highlight */}
+        {isGraveTarget && <div className="tile-highlight-grave" />}
 
         {/* Tree obstacle - use pokok.png */}
         {isObstacle && (
@@ -39,8 +92,28 @@ export default function GameBoard({ state, onMove }) {
           </div>
         )}
 
-        {/* Grave decoration */}
-        {tileType === 6 && <div className="grave-marker">✝</div>}
+        {/* Lantai lumut (moss) — lumut image */}
+        {tileType === 2 && (
+          <div className="lumut-decoration">
+            <img src={LUMUT_IMG} alt="Lumut" className="lumut-img" />
+          </div>
+        )}
+
+        {/* Kubur portal (grave type-6) — glowing tombstone = PORTAL */}
+        {tileType === 6 && (
+          <div className="grave-portal-decoration">
+            <img src={KUBUR_IMG} alt="Kubur Portal" className="grave-portal-img" />
+            <div className="grave-portal-glow" />
+          </div>
+        )}
+
+
+        {/* Extra random tree on this green tile */}
+        {extraTrees && extraTrees.some(t => t.row === row && t.col === col) && (
+          <div className="tree-obstacle extra-tree">
+            <img src={POKOK_IMG} alt="Pokok" className="pokok-img" />
+          </div>
+        )}
 
         {/* Tempat Selamat */}
         {isHomeTile && (
@@ -131,6 +204,15 @@ export default function GameBoard({ state, onMove }) {
             </div>
           ))}
 
+          {/* Selipar Jepun on board */}
+          {selipar && renderEntity(selipar, 'selipar', (
+            <div className="selipar-wrapper">
+              <img src={SELIPAR_JEPUN_IMG} alt="Selipar Jepun" className="selipar-sprite" />
+              <div className="entity-shadow" />
+              <div className="selipar-glow" />
+            </div>
+          ))}
+
           {/* Alive Bomoh */}
           {bomoh && renderEntity(bomoh, 'bomoh', (
             <div className="bomoh-wrapper">
@@ -172,9 +254,9 @@ export default function GameBoard({ state, onMove }) {
           ))}
 
           {/* Player (Husin) */}
-          {renderEntity(player, 'player', (
-            <div className={`player-wrapper ${playerAtHome ? 'at-home' : ''} ${carryingUsop ? 'carrying' : ''}`}>
-              <img src={HUSIN_SPRITES[player.dir]} alt="Husin" className="player-sprite" />
+          {renderEntity(displayPlayer, 'player', (
+            <div className={`player-wrapper ${playerAtHome ? 'at-home' : ''} ${carryingUsop ? 'carrying' : ''} ${hasSelipar ? 'holding-selipar' : ''} ${isOnLumut ? 'on-lumut' : ''} ${isSliding ? 'sliding' : ''}`}>
+              <img src={hasSelipar ? HUSIN_SELIPAR_IMG : HUSIN_SPRITES[player.dir]} alt="Husin" className="player-sprite" />
               <div className="entity-shadow player-shadow" />
               {playerAtHome && <div className="shield-effect" />}
               {carryingUsop && (
@@ -182,18 +264,14 @@ export default function GameBoard({ state, onMove }) {
                   <img src={USOP_WILCHA_IMG} alt="Carrying Usop" className="carrying-usop-mini" />
                 </div>
               )}
+              {(isOnLumut || isSliding) && (
+                <div className="tergelincir-label">💨 TERGELINCIR!</div>
+              )}
             </div>
           ))}
         </div>
       </div>
 
-      {/* Mobile D-Pad */}
-      <div className="dpad">
-        <button className="dpad-btn dpad-up" onClick={() => onMove(DIR.UP)}>▲</button>
-        <button className="dpad-btn dpad-left" onClick={() => onMove(DIR.LEFT)}>◀</button>
-        <button className="dpad-btn dpad-right" onClick={() => onMove(DIR.RIGHT)}>▶</button>
-        <button className="dpad-btn dpad-down" onClick={() => onMove(DIR.DOWN)}>▼</button>
-      </div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { HUSIN_SPRITES, LIMAH_SPRITES, DIR } from '../constants'
 import './GameOverScreen.css'
 
-export default function GameOverScreen({ win, score, turns, onRestart, onMenu }) {
+export default function GameOverScreen({ win, score, turns, onRestart, onMenu, playClick }) {
   return (
     <div className="gameover-overlay">
       <div className="gameover-vignette" />
@@ -11,7 +11,7 @@ export default function GameOverScreen({ win, score, turns, onRestart, onMenu })
         {win ? (
           <>
             <h1 className="gameover-title win-title">SELAMAT!</h1>
-            <div className="gameover-subtitle">Husin berjaya melarikan diri!</div>
+            <div className="gameover-subtitle">Husin berjaya melarikan diri bersama Usop beban!</div>
             <img src={HUSIN_SPRITES[DIR.DOWN]} alt="Husin" className="gameover-char" />
           </>
         ) : (
@@ -34,10 +34,10 @@ export default function GameOverScreen({ win, score, turns, onRestart, onMenu })
         </div>
 
         <div className="gameover-buttons">
-          <button className="menu-btn menu-btn-start" onClick={onRestart}>
+          <button className="menu-btn menu-btn-start" onClick={() => { if (playClick) playClick(); onRestart(); }}>
             MAIN LAGI
           </button>
-          <button className="menu-btn" onClick={onMenu}>
+          <button className="menu-btn" onClick={() => { if (playClick) playClick(); onMenu(); }}>
             MENU
           </button>
         </div>

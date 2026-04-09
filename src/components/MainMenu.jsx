@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   LIMAH_SPRITES, HUSIN_SPRITES, POWERUP_SPRITES,
   TEMPAT_SELAMAT_IMG, USOP_WILCHA_IMG, BUKU_PANDUAN_IMG,
-  FLAG_TOLONG_IMG, BOMOH_FULLBODY_IMG,
+  FLAG_TOLONG_IMG, BOMOH_FULLBODY_IMG, SELIPAR_JEPUN_IMG,
   DIR, POWERUP,
 } from '../constants'
 import './MainMenu.css'
@@ -20,64 +20,185 @@ const TAGLINES = [
   "Main sorang-sorang pun takut jugak.",
 ];
 
-export default function MainMenu({ onStart }) {
+export default function MainMenu({ onStart, playClick }) {
   const [showGuide, setShowGuide] = useState(false);
-  const tagline = useMemo(() => TAGLINES[Math.floor(Math.random() * TAGLINES.length)], []);
+  const [taglineIdx, setTaglineIdx] = useState(() => Math.floor(Math.random() * TAGLINES.length));
+  const [titleReady, setTitleReady] = useState(false);
+  const [showPress, setShowPress] = useState(false);
+  const [menuScale, setMenuScale] = useState(1);
+
+  const tagline = TAGLINES[taglineIdx];
+
+  // Rotate taglines
+  useEffect(() => {
+    const t = setInterval(() => {
+      setTaglineIdx(i => (i + 1) % TAGLINES.length);
+    }, 4000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Scale menu content to fit viewport height only (width handled by responsive CSS)
+  useEffect(() => {
+    const calc = () => {
+      const vh = window.innerHeight;
+      // Only scale down when viewport height is too short to fit content
+      const scaleY = vh / 700;
+      setMenuScale(Math.min(scaleY, 1));
+    };
+    calc();
+    window.addEventListener('resize', calc);
+    return () => window.removeEventListener('resize', calc);
+  }, []);
+
+  // Title entrance animation
+  useEffect(() => {
+    const t1 = setTimeout(() => setTitleReady(true), 400);
+    const t2 = setTimeout(() => setShowPress(true), 1200);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
 
   return (
     <div className="main-menu">
+      {/* Atmospheric background layers */}
+      <div className="menu-bg-gradient" />
+      <div className="menu-fog fog-1" />
+      <div className="menu-fog fog-2" />
       <div className="menu-vignette" />
-      <div className="menu-moon" />
+      <div className="menu-scanlines" />
+      <div className="menu-noise" />
 
-      {/* Floating particles */}
-      <div className="menu-particles">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="menu-particle" style={{
-            left: `${10 + Math.random() * 80}%`,
-            animationDelay: `${Math.random() * 6}s`,
-            animationDuration: `${4 + Math.random() * 4}s`,
+      {/* Blood drip decoration at top */}
+      <div className="blood-drips">
+        {Array.from({ length: 14 }).map((_, i) => (
+          <div key={i} className="blood-drip" style={{
+            left: `${3 + i * 7}%`,
+            height: `${20 + Math.random() * 50}px`,
+            animationDelay: `${Math.random() * 3}s`,
+            animationDuration: `${2 + Math.random() * 2}s`,
           }} />
         ))}
       </div>
 
-      <div className="menu-content">
+      {/* Floating ghost particles */}
+      <div className="menu-particles">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div key={i} className="menu-particle" style={{
+            left: `${5 + Math.random() * 90}%`,
+            animationDelay: `${Math.random() * 8}s`,
+            animationDuration: `${5 + Math.random() * 5}s`,
+          }} />
+        ))}
+      </div>
+
+      {/* Moon with halo */}
+      <div className="menu-moon">
+        <div className="moon-halo" />
+        <div className="moon-core" />
+      </div>
+
+      {/* Pixel border frame */}
+      <div className="pixel-frame">
+        <div className="pixel-frame-corner pf-tl" />
+        <div className="pixel-frame-corner pf-tr" />
+        <div className="pixel-frame-corner pf-bl" />
+        <div className="pixel-frame-corner pf-br" />
+      </div>
+
+      <div className="menu-content-scaler" style={menuScale < 1 ? { transform: `scale(${menuScale})` } : undefined}>
+      <div className={`menu-content ${titleReady ? 'menu-content-ready' : ''}`}>
         {/* Title Section */}
         <div className="menu-title-wrapper">
-          <h1 className="menu-title">HANTU</h1>
-          <h1 className="menu-title title-sub">KAK LIMAH</h1>
-          <div className="menu-subtitle">~ Kejar-Kejar ~</div>
-        </div>
-
-        {/* Character VS Preview */}
-        <div className="menu-versus">
-          <div className="menu-char-preview menu-husin">
-            <img src={HUSIN_SPRITES[DIR.RIGHT]} alt="Husin" className="menu-char-img" />
-            <span className="menu-char-name">HUSIN</span>
+          <div className="title-badge">
+            <span className="badge-star">★</span>
+            MALAY HORROR ADVENTURE
+            <span className="badge-star">★</span>
           </div>
-          <div className="menu-vs-badge">VS</div>
-          <div className="menu-char-preview menu-limah">
-            <img src={LIMAH_SPRITES[DIR.LEFT]} alt="Kak Limah" className="menu-char-img menu-limah-img" />
-            <span className="menu-char-name limah-name">KAK LIMAH</span>
+          <h1 className="menu-title">
+            <span className="title-line title-hantu">HANTU</span>
+            <span className="title-line title-kaklimah">KAK LIMAH</span>
+          </h1>
+          <div className="menu-subtitle">
+            <span className="subtitle-dash" />
+            <span className="subtitle-text">Kejar-Kejar</span>
+            <span className="subtitle-dash" />
           </div>
         </div>
 
-        {/* Funny Tagline */}
-        <div className="menu-tagline">"{tagline}"</div>
+        {/* Character Showcase - Nintendo style */}
+        <div className="menu-showcase">
+          {/* Husin side */}
+          <div className="showcase-char showcase-husin">
+            <div className="char-platform" />
+            <div className="char-glow husin-glow" />
+            <img src={HUSIN_SPRITES[DIR.RIGHT]} alt="Husin" className="showcase-img" />
+            <div className="char-nameplate">
+              <span className="char-name">HUSIN</span>
+              <span className="char-title">Pelari Kampung</span>
+            </div>
+          </div>
 
-        {/* Buttons */}
-        <div className="menu-buttons">
-          <button className="menu-btn menu-btn-start" onClick={onStart}>
-            MULA MAIN
+          {/* VS emblem */}
+          <div className="showcase-vs">
+            <div className="vs-burst" />
+            <div className="vs-circle">
+              <span>VS</span>
+            </div>
+            <div className="vs-spark vs-spark-1" />
+            <div className="vs-spark vs-spark-2" />
+            <div className="vs-spark vs-spark-3" />
+            <div className="vs-spark vs-spark-4" />
+          </div>
+
+          {/* Kak Limah side */}
+          <div className="showcase-char showcase-limah">
+            <div className="char-platform limah-platform" />
+            <div className="char-glow limah-glow" />
+            <img src={LIMAH_SPRITES[DIR.LEFT]} alt="Kak Limah" className="showcase-img limah-img" />
+            <div className="char-nameplate limah-nameplate">
+              <span className="char-name limah-name">KAK LIMAH</span>
+              <span className="char-title">Hantu Kampung</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Rotating tagline */}
+        <div className="menu-tagline-wrapper">
+          <div className="tagline-border" />
+          <div className="menu-tagline" key={taglineIdx}>
+            <span className="tagline-quote">"</span>
+            {tagline}
+            <span className="tagline-quote">"</span>
+          </div>
+          <div className="tagline-border" />
+        </div>
+
+        {/* Action Buttons */}
+        <div className={`menu-buttons ${showPress ? 'buttons-ready' : ''}`}>
+          <button className="menu-btn menu-btn-start" onClick={() => { if (playClick) playClick(); onStart(); }}>
+            <div className="btn-pixel-border" />
+            <span className="btn-icon">▶</span>
+            <span className="btn-text">MULA MAIN</span>
+            <div className="btn-shine" />
           </button>
-          <button className="menu-btn menu-btn-guide" onClick={() => setShowGuide(true)}>
+          <button className="menu-btn menu-btn-guide" onClick={() => { if (playClick) playClick(); setShowGuide(true); }}>
+            <div className="btn-pixel-border" />
             <img src={BUKU_PANDUAN_IMG} alt="Buku Panduan" className="guide-btn-icon" />
-            BUKU PANDUAN
+            <span className="btn-text">BUKU PANDUAN</span>
           </button>
         </div>
 
         <div className="menu-footer">
-          WASD / Arrow Keys untuk bergerak
+          <span className="footer-keys">
+            <span className="key-cap">W</span>
+            <span className="key-cap">A</span>
+            <span className="key-cap">S</span>
+            <span className="key-cap">D</span>
+            / Arrow Keys
+          </span>
+          <span className="footer-sep">|</span>
+          <span className="footer-ver">v1.0</span>
         </div>
+      </div>
       </div>
 
       {/* Guide Overlay */}
@@ -144,6 +265,13 @@ export default function MainMenu({ onStart }) {
                       <span>+1 HP. Nyawa tambahan, sedap pulak tu.</span>
                     </div>
                   </div>
+                  <div className="guide-item">
+                    <img src={SELIPAR_JEPUN_IMG} alt="Selipar Jepun" className="guide-icon" />
+                    <div className="guide-item-text">
+                      <strong>Selipar Jepun</strong>
+                      <span>Campak kat muka Limah (stun 3 turn) atau lari (+3 langkah)!</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -199,7 +327,8 @@ export default function MainMenu({ onStart }) {
               </div>
             </div>
 
-            <button className="menu-btn guide-close-btn" onClick={() => setShowGuide(false)}>
+            <button className="menu-btn guide-close-btn" onClick={() => { if (playClick) playClick(); setShowGuide(false); }}>
+              <div className="btn-pixel-border" />
               TUTUP
             </button>
           </div>

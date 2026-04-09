@@ -269,6 +269,27 @@
   z-index: 2;
 }
 
+/* === Kubur on brown (mud) tiles === */
+.kubur-decoration {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.kubur-img {
+  width: 40px;
+  height: auto;
+  image-rendering: pixelated;
+  opacity: 0.7;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+}
+
+/* Extra random trees look identical to hardcoded trees */
+
 /* === Home tile (tempat selamat) === */
 .tile-home {
   background: linear-gradient(135deg, #3a4a2a 0%, #4a5a3a 50%, #3a4a2a 100%) !important;
@@ -295,12 +316,12 @@
 }
 
 .tempat-selamat-building {
-  bottom: 4px;
+  bottom: -2px;
   left: 50%;
-  transform: translateX(-50%) translateY(-24%);
+  transform: translateX(-50%) translateY(-10%);
 }
 .tempat-selamat-building .building-img {
-  width: 80px;
+  width: 100px;
   height: auto;
   filter:
     drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.7))
@@ -781,4 +802,233 @@
     opacity: 0;
     transform: scale(1.8) translateY(-25px);
   }
+}
+
+/* ===== SELIPAR JEPUN ON BOARD ===== */
+.selipar-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: seliparBob 1.5s ease-in-out infinite;
+}
+
+.selipar-sprite {
+  width: 42px;
+  height: auto;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,0.7));
+  animation: seliparSpin 3s linear infinite;
+}
+
+.selipar-glow {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  background: radial-gradient(circle, rgba(255, 100, 50, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glowPulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes seliparBob {
+  0%, 100% { transform: translateY(-10px); }
+  50% { transform: translateY(-18px); }
+}
+
+@keyframes seliparSpin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+/* ===== LUMUT SLIDE ANIMATION ===== */
+
+/* Phase 1: Husin lands ON lumut tile — shake in surprise */
+.on-lumut .player-sprite {
+  animation: lumutShock 0.2s ease-in-out;
+  filter: drop-shadow(0 0 8px rgba(80, 220, 80, 0.9)) drop-shadow(0 3px 6px rgba(0,0,0,0.8));
+}
+
+@keyframes lumutShock {
+  0%   { transform: scale(1) rotate(0deg); }
+  40%  { transform: scale(1.15) rotate(-8deg); }
+  70%  { transform: scale(0.95) rotate(6deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Phase 2: sliding toward Kak Limah — spin + speed blur */
+.sliding .player-sprite {
+  animation: lumutSpin 0.4s ease-in forwards;
+  filter: drop-shadow(0 0 12px rgba(255, 100, 50, 0.8)) blur(0.5px);
+}
+
+@keyframes lumutSpin {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(0.85); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* TERGELINCIR label — floats up and fades out */
+.tergelincir-label {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: 'Creepster', cursive;
+  font-size: 13px;
+  color: #aaff55;
+  text-shadow: 0 0 6px rgba(50, 200, 50, 0.9), 1px 1px 0 #000;
+  pointer-events: none;
+  z-index: 20;
+  animation: tergelincirFloat 0.6s ease-out forwards;
+}
+
+@keyframes tergelincirFloat {
+  0%   { opacity: 1;   transform: translateX(-50%) translateY(0px); }
+  60%  { opacity: 1;   transform: translateX(-50%) translateY(-14px); }
+  100% { opacity: 0;   transform: translateX(-50%) translateY(-24px); }
+}
+
+/* ===== HUSIN HOLDING SELIPAR ===== */
+.holding-selipar .player-sprite {
+  filter: drop-shadow(0 0 8px rgba(255, 150, 50, 0.6)) drop-shadow(0 3px 6px rgba(0,0,0,0.8));
+}
+
+/* ===== GHOST STUN EFFECT (selipar hit) ===== */
+.ghost-wrapper.frozen .ghost-sprite {
+  filter: brightness(1.3) saturate(0.6) drop-shadow(0 0 10px rgba(100, 200, 255, 0.7));
+  animation: stunShake 0.3s ease-in-out infinite;
+}
+
+@keyframes stunShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px) rotate(-2deg); }
+  75% { transform: translateX(3px) rotate(2deg); }
+}
+
+/* ===== RUMPUT (GRASS) TILE BASE IMAGE ===== */
+.rumput-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.rumput-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.75;
+  border-radius: 1px;
+}
+
+/* ===== TANAH BASE FOR KUBUR PORTAL ===== */
+.tanah-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.tanah-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  border-radius: 1px;
+}
+
+/* ===== LUMUT TILE DECORATION ===== */
+.lumut-decoration {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.55;
+}
+
+.lumut-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  filter: saturate(1.2) brightness(0.85);
+}
+
+/* ===== KUBUR PORTAL TILE DECORATION ===== */
+.grave-portal-decoration {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.grave-portal-img {
+  width: 72%;
+  height: auto;
+  filter: drop-shadow(0 0 6px rgba(160, 60, 220, 0.9)) brightness(1.1);
+  animation: portalFloat 2s ease-in-out infinite;
+}
+
+.grave-portal-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(160, 60, 220, 0.25) 0%, transparent 70%);
+  animation: portalPulse 1.6s ease-in-out infinite;
+  border-radius: 3px;
+}
+
+@keyframes portalFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-3px); }
+}
+
+@keyframes portalPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+/* ===== TILE EFFECT HIGHLIGHTS ===== */
+
+/* Valid move — soft green chess-style hint */
+.tile-highlight-valid {
+  position: absolute;
+  inset: 0;
+  background: rgba(80, 220, 100, 0.22);
+  border: 2px solid rgba(80, 220, 100, 0.55);
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 2;
+  animation: validPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes validPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Grave portal target — eerie purple glow */
+.tile-highlight-grave {
+  position: absolute;
+  inset: 0;
+  background: rgba(160, 80, 220, 0.28);
+  border: 2px solid rgba(180, 100, 255, 0.7);
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 2;
+  animation: gravePulse 0.9s ease-in-out infinite;
+}
+
+@keyframes gravePulse {
+  0%, 100% { opacity: 0.6; box-shadow: inset 0 0 8px rgba(180, 80, 255, 0.3); }
+  50% { opacity: 1; box-shadow: inset 0 0 16px rgba(180, 80, 255, 0.6); }
 }

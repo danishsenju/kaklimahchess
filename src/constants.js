@@ -23,6 +23,30 @@ import husinnnSfx from './soundeffect/husinnn.mp3'
 import dukunJawaSfx from './soundeffect/dukunjawa.mp3'
 import usopDukunSfx from './soundeffect/usopdukun.mp3'
 import bukuPanduanImg from './Images/bukupanduan.png'
+import husinSeliparImg from './Images/husinselipar1.png'
+import seliparJepunImg from './Images/selipurjepun.png'
+import seliparCampakBtnImg from './Images/seliparcampakbutton.png'
+import husinLariBtnImg from './Images/husinlaributton.png'
+import kuburImg from './Images/kubur.png'
+import lumutImg from './Images/lumut_image.png'
+import rumputImg from './Images/rumput_image.png'
+import tanahImg from './Images/tanah_image.png'
+import kaklimahBattleImg from './Images/kaklimah_battle.png'
+import husinBattleImg from './Images/husin_battle.png'
+import duelBackgroundImg from './Images/duel_background.png'
+import pakjabitImg from './Images/pakjabit.png'
+import husinKalahLockImg from './Images/husin-kalahsemuabuttonlock.png'
+import duelButtonImg from './Images/duel-button.png'
+import duelButtonMobileImg from './Images/duel-buttonmobile.png'
+import bunyiTembakanSfx from './soundeffect/bunyi-tembakan.mp3'
+import suaraPakjabitSfx from './soundeffect/suara-pakjabit.mp3'
+import ingameSoundSrc from './soundeffect/ingamesound.mp3'
+import gameoverSfx from './soundeffect/gameover.mp3'
+import kaklimahBekuSfx from './soundeffect/kaklimahbeku.mp3'
+import kuihSfx from './soundeffect/kuihsoundeffect.mp3'
+import seliparKemukaSfx from './soundeffect/seliparkemuka.mp3'
+import clickSoundSfx from './soundeffect/clicksound.mp3'
+import soleySoleySfx from './soundeffect/soleysoley.mp3'
 
 // Board dimensions
 export const BOARD_SIZE = 8;
@@ -90,16 +114,52 @@ export const HUSINNN_SFX = husinnnSfx;
 export const DUKUN_JAWA_SFX = dukunJawaSfx;
 export const USOP_DUKUN_SFX = usopDukunSfx;
 export const BUKU_PANDUAN_IMG = bukuPanduanImg;
+export const HUSIN_SELIPAR_IMG = husinSeliparImg;
+export const SELIPAR_JEPUN_IMG = seliparJepunImg;
+export const SELIPAR_CAMPAK_BTN_IMG = seliparCampakBtnImg;
+export const HUSIN_LARI_BTN_IMG = husinLariBtnImg;
+export const KUBUR_IMG = kuburImg;
+export const LUMUT_IMG = lumutImg;
+export const RUMPUT_IMG = rumputImg;
+export const TANAH_IMG = tanahImg;
+export const KAKLIMAH_BATTLE_IMG = kaklimahBattleImg;
+export const HUSIN_BATTLE_IMG = husinBattleImg;
+export const DUEL_BACKGROUND_IMG = duelBackgroundImg;
+export const PAKJABIT_IMG = pakjabitImg;
+export const DUEL_BUTTON_IMG = duelButtonImg;
+export const HUSIN_KALAH_LOCK_IMG = husinKalahLockImg;
+export const DUEL_BUTTON_MOBILE_IMG = duelButtonMobileImg;
+export const BUNYI_TEMBAKAN_SFX = bunyiTembakanSfx;
+export const SUARA_PAKJABIT_SFX = suaraPakjabitSfx;
+export const INGAME_SOUND_SRC = ingameSoundSrc;
+export const GAMEOVER_SFX = gameoverSfx;
+export const KAKLIMAH_BEKU_SFX = kaklimahBekuSfx;
+export const KUIH_SFX = kuihSfx;
+export const SELIPAR_KEMUKA_SFX = seliparKemukaSfx;
+export const CLICK_SOUND_SFX = clickSoundSfx;
+export const SOLEY_SOLEY_SFX = soleySoleySfx;
 
 // Game settings
 export const INITIAL_HP = 3;
 export const FREEZE_DURATION = 4;
 export const CONFUSE_DURATION = 2;
 export const SERI_MUKA_BONUS_MOVES = 2;
+export const SELIPAR_STUN_DURATION = 3;
+export const SELIPAR_BONUS_MOVES = 3;
+export const SELIPAR_SPAWN_INTERVAL = 10;  // selipar spawns every 10 turns
 export const MAX_POWERUPS_ON_BOARD = 3;
 export const WIN_SCORE = 10;
 export const FLAG_SPAWN_TURN = 5;       // flag first spawns at turn 5
 export const FLAG_RESPAWN_INTERVAL = 8;  // new flag every 8 turns after bomoh dies
+
+// Tile effect rules (for UI legend + logic reference)
+export const TILE_EFFECTS = {
+  0: { name: 'Rumput', effect: 'Normal — gerak 1 langkah mana-mana arah' },
+  1: { name: 'Tanah Berlumpur', effect: 'Jebakan — masuk sini habis 2 langkah' },
+  2: { name: 'Lumut', effect: 'Licin — auto-gelincir 1 langkah lagi arah sama' },
+  3: { name: 'Gelap', effect: 'Bayang — Hantu jadi keliru giliran ini' },
+  6: { name: 'Kubur', effect: 'Portal — boleh teleport ke mana-mana kubur lain' },
+};
 
 // ===== HARD GHOST AI SETTINGS =====
 export const GHOST_DOUBLE_MOVE_CHANCE = 0.35;
@@ -107,23 +167,16 @@ export const GHOST_SPEED_UP_AFTER_TURN = 8;
 export const GHOST_AGGRO_RANGE = 4;
 
 // Board layout - horror chess board with trees as obstacles
-// 0=grass, 1=mud, 2=moss, 3=dark, 4=home(tempat selamat), 5=tree, 6=grave
+// 0=grass, 1=mud, 2=moss, 3=dark, 5=tree, 6=grave
 // Trees block BOTH player AND ghost. Layout ensures all areas are connected.
+// Home (tempat selamat) position is randomized each game.
 export const BOARD_LAYOUT = [
   [0, 0, 2, 1, 0, 0, 2, 0],
   [0, 3, 0, 6, 0, 3, 0, 1],
   [2, 0, 5, 0, 2, 0, 0, 0],
   [0, 6, 0, 0, 0, 1, 5, 2],
-  [1, 0, 2, 0, 4, 0, 6, 0],
+  [1, 0, 2, 0, 0, 0, 6, 0],
   [0, 3, 5, 0, 0, 3, 0, 1],
   [2, 0, 6, 0, 2, 0, 1, 0],
   [0, 1, 0, 2, 5, 0, 0, 0],
 ];
-
-// Special tile positions
-export const HOME_POS = { row: 4, col: 4 };
-
-// Starting positions
-export const HUSIN_START = { row: 7, col: 1 };
-export const LIMAH_START = { row: 0, col: 4 };
-export const USOP_START = { row: 1, col: 5 };

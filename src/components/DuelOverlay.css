@@ -1,0 +1,696 @@
+/* ===== DUEL OVERLAY — Pokemon GBA Layout (Horror Theme) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* ─────────────────────────────────────────────
+   ROOT
+   ───────────────────────────────────────────── */
+.duel-root {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+}
+
+.duel-phase-entering { animation: duelFadeIn  0.3s ease-out forwards; }
+.duel-phase-closing  { animation: duelFadeOut 0.4s ease-in  forwards; }
+
+@keyframes duelFadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes duelFadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+/* ─────────────────────────────────────────────
+   HUSIN KALAH — ALL BUTTONS LOCKED POPUP
+   ───────────────────────────────────────────── */
+.kalah-lock-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 750;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  background: rgba(0,0,0,0.82);
+  animation: pakjabitEnter 0.4s ease-out forwards;
+}
+
+.kalah-lock-img {
+  width: clamp(200px, 50vw, 420px);
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 30px rgba(255,30,30,0.8));
+  animation: kalahShake 0.5s ease-in-out 2;
+}
+
+@keyframes kalahShake {
+  0%,100% { transform: rotate(0deg); }
+  25%     { transform: rotate(-4deg) scale(1.04); }
+  75%     { transform: rotate(4deg) scale(1.04); }
+}
+
+.kalah-lock-dialog {
+  background: #f2edd8;
+  border: 3px solid #8b0000;
+  border-radius: 10px;
+  padding: 14px 20px 10px;
+  box-shadow: 4px 4px 0 #8b0000;
+  max-width: min(480px, 90vw);
+  text-align: center;
+}
+
+.kalah-lock-text {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.38rem, 1.5vw, 0.58rem);
+  color: #8b0000;
+  line-height: 1.9;
+  margin: 0 0 6px 0;
+}
+
+/* ─────────────────────────────────────────────
+   PAK JABIT POPUP
+   ───────────────────────────────────────────── */
+.pakjabit-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  pointer-events: none;
+  animation: pakjabitEnter 0.4s ease-out forwards;
+}
+
+@keyframes pakjabitEnter {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pakjabit-img {
+  width: clamp(120px, 22vw, 240px);
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 20px rgba(255,80,0,0.7));
+  flex-shrink: 0;
+  margin-left: clamp(8px, 2vw, 30px);
+  margin-bottom: 4px;
+}
+
+.pakjabit-dialog-wrap {
+  margin-bottom: clamp(60px, 12vw, 130px);
+  margin-left: 10px;
+  max-width: 380px;
+}
+
+.pakjabit-dialog {
+  background: #f2edd8;
+  border: 3px solid #2a1a0a;
+  border-radius: 10px;
+  padding: 12px 16px 10px;
+  box-shadow: 4px 4px 0 #2a1a0a;
+  position: relative;
+}
+
+.pakjabit-text {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.38rem, 1.4vw, 0.56rem);
+  color: #1a0a00;
+  line-height: 1.8;
+  margin: 0 0 6px 0;
+}
+
+.pakjabit-blink {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  color: #2a1a0a;
+  animation: blinkAnim 0.7s ease-in-out infinite;
+  display: block;
+  text-align: right;
+}
+
+@keyframes blinkAnim { 0%,100%{ opacity:0.3; } 50%{ opacity:1; } }
+
+/* ─────────────────────────────────────────────
+   BATTLEFIELD  (upper ~60% on desktop, ~50% on mobile)
+   ───────────────────────────────────────────── */
+.duel-field {
+  position: relative;
+  flex: 1 1 60%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.duel-field-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 30%;
+  filter: brightness(0.65) saturate(1.1);
+}
+
+/* Ground shadow ovals */
+.duel-platform {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.duel-platform-enemy {
+  width: clamp(130px, 24vw, 260px);
+  height: clamp(18px, 3vw, 36px);
+  background: radial-gradient(ellipse, rgba(40,20,0,0.8) 0%, transparent 80%);
+  bottom: 34%;
+  right: clamp(30px, 8vw, 100px);
+}
+
+.duel-platform-player {
+  width: clamp(150px, 26vw, 290px);
+  height: clamp(20px, 3.5vw, 40px);
+  background: radial-gradient(ellipse, rgba(40,20,0,0.85) 0%, transparent 80%);
+  bottom: 6%;
+  left: clamp(10px, 4vw, 60px);
+}
+
+/* ── Info boxes ── */
+.duel-info-box {
+  position: absolute;
+  background: #f2edd8;
+  border: 3px solid #2a1a0a;
+  border-radius: 10px;
+  z-index: 4;
+  box-shadow: 4px 4px 0 #2a1a0a;
+  min-width: clamp(170px, 30vw, 290px);
+}
+
+.duel-enemy-box {
+  top: 10px;
+  left: 12px;
+  animation: boxSlideRight 0.35s ease-out 0.1s both;
+}
+
+.duel-player-box {
+  bottom: 3%;
+  right: 12px;
+  animation: boxSlideLeft 0.35s ease-out 0.15s both;
+}
+
+@keyframes boxSlideRight {
+  from { opacity:0; transform:translateX(-30px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes boxSlideLeft {
+  from { opacity:0; transform:translateX(30px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+.duel-box-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px 4px;
+  border-bottom: 2px solid #2a1a0a;
+}
+
+.duel-box-name {
+  font-size: clamp(0.42rem, 1.6vw, 0.65rem);
+  color: #1a0a00;
+  letter-spacing: 0.04em;
+}
+
+.duel-box-lv {
+  font-size: clamp(0.38rem, 1.3vw, 0.55rem);
+  color: #3a2010;
+}
+
+.duel-box-hp-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px 4px;
+}
+
+.duel-hp-label {
+  font-size: clamp(0.34rem, 1.1vw, 0.5rem);
+  color: #1a0a00;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.duel-hp-track {
+  flex: 1;
+  height: 10px;
+  background: #5a4030;
+  border-radius: 0 5px 5px 0;
+  border: 2px solid #2a1a0a;
+  overflow: hidden;
+}
+
+.duel-hp-fill {
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  transition: width 0.7s ease, background 0.4s ease;
+}
+
+.duel-hp-fill::after {
+  content: '';
+  display: block;
+  height: 40%;
+  background: rgba(255,255,255,0.25);
+}
+
+.limah-hp-fill { background: #58c840; }
+
+.duel-box-hp-num-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 12px 5px;
+}
+
+.duel-hp-num {
+  font-size: clamp(0.34rem, 1.1vw, 0.5rem);
+  color: #1a0a00;
+}
+
+.duel-counter-text {
+  font-size: clamp(0.32rem, 1.1vw, 0.48rem);
+  color: #8b0000;
+  padding: 0 12px 6px;
+  text-align: center;
+  line-height: 1.6;
+  animation: textPop 0.3s ease-out forwards;
+}
+
+@keyframes textPop {
+  from { opacity:0; transform:scale(0.8); }
+  to   { opacity:1; transform:scale(1); }
+}
+
+/* ── Sprites ── */
+.duel-sprite-enemy {
+  position: absolute;
+  right: clamp(20px, 6vw, 80px);
+  bottom: 34%;
+  z-index: 3;
+  animation: enemyEntrance 0.4s ease-out 0.05s both;
+}
+
+.duel-sprite-player {
+  position: absolute;
+  left: clamp(10px, 3vw, 50px);
+  bottom: 6%;
+  z-index: 3;
+  animation: playerEntrance 0.45s ease-out 0.1s both;
+}
+
+@keyframes enemyEntrance {
+  from { opacity:0; transform:translateX(60px) scale(0.8); }
+  to   { opacity:1; transform:translateX(0) scale(1); }
+}
+
+@keyframes playerEntrance {
+  from { opacity:0; transform:translateX(-60px) scale(0.8); }
+  to   { opacity:1; transform:translateX(0) scale(1); }
+}
+
+/* BIGGER sprites — this is the key fix */
+.duel-enemy-img {
+  width: clamp(180px, 32vw, 340px);
+  height: clamp(180px, 32vw, 340px);
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 10px 2px rgba(0,0,0,0.55));
+  display: block;
+}
+
+.duel-player-img {
+  width: clamp(190px, 34vw, 360px);
+  height: clamp(190px, 34vw, 360px);
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 10px 2px rgba(0,0,0,0.55));
+  display: block;
+  /* Husin faces right toward Kak Limah */
+  transform: scaleX(1);
+}
+
+/* Win / faint */
+.sprite-win  { animation: spriteWin   0.45s ease-in-out 3 !important; }
+.sprite-faint { animation: spriteFaint 0.7s ease-out forwards !important; }
+
+@keyframes spriteWin {
+  0%,100% { filter: drop-shadow(0 10px 2px rgba(0,0,0,0.55)) brightness(1); }
+  50%     { filter: drop-shadow(0 0 28px #ffcc00) brightness(1.4); }
+}
+
+@keyframes spriteFaint {
+  0%   { opacity:1; transform:translateY(0); }
+  100% { opacity:0; transform:translateY(70px); }
+}
+
+.duel-player-img.sprite-faint {
+  animation: spriteFaintFlip 0.7s ease-out forwards !important;
+}
+
+@keyframes spriteFaintFlip {
+  0%   { opacity:1; transform:scaleX(1) translateY(0); }
+  100% { opacity:0; transform:scaleX(1) translateY(70px); }
+}
+
+/* Result banner */
+.duel-result-banner {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  font-size: clamp(0.65rem, 2.8vw, 1.1rem);
+  letter-spacing: 0.06em;
+  padding: 10px 24px;
+  border-radius: 6px;
+  background: rgba(5,0,10,0.88);
+  border: 3px solid currentColor;
+  text-align: center;
+  animation: bannerFlash 0.4s ease-out forwards;
+}
+
+.result-husin { color: #58f870; }
+.result-limah { color: #f85050; }
+.result-draw  { color: #f8d840; }
+
+@keyframes bannerFlash {
+  from { opacity:0; transform:translate(-50%,-50%) scale(0.6); }
+  to   { opacity:1; transform:translate(-50%,-50%) scale(1); }
+}
+
+/* ─────────────────────────────────────────────
+   BOTTOM PANEL  (dialog + moves)
+   DESKTOP: side-by-side
+   ───────────────────────────────────────────── */
+.duel-bottom {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  height: clamp(130px, 38%, 200px);
+  border-top: 4px solid #2a1a0a;
+  background: #e8e0c8;
+}
+
+.duel-dialog {
+  flex: 0 0 55%;
+  border-right: 4px solid #2a1a0a;
+  padding: clamp(14px, 3vw, 24px) clamp(16px, 3.5vw, 28px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  background: #ede5cc;
+}
+
+.duel-dialog-text {
+  font-size: clamp(0.44rem, 1.8vw, 0.7rem);
+  color: #1a0a00;
+  line-height: 1.9;
+  margin: 0;
+}
+
+.duel-dialog-sub {
+  font-size: clamp(0.35rem, 1.2vw, 0.5rem);
+  color: #7a5a3a;
+  margin: 0;
+  animation: blinkAnim 0.8s ease-in-out infinite;
+}
+
+.duel-action-box {
+  flex: 1 1 45%;
+  background: #ddd5b8;
+  display: flex;
+  align-items: stretch;
+}
+
+/* 2×2 grid exactly like Pokemon */
+.duel-move-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+}
+
+.duel-move-btn {
+  position: relative;
+  background: transparent; /* image set via inline style */
+  border: none;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.36rem, 1.4vw, 0.56rem);
+  color: #fff;
+  text-shadow: 1px 1px 0 #000, 0 0 6px rgba(0,0,0,0.8);
+  cursor: pointer;
+  text-align: left;
+  padding: 6px 8px 6px 22px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  transition: filter 0.1s, transform 0.08s;
+  margin: 3px;
+  border-radius: 4px;
+}
+
+.duel-move-btn:hover:not(:disabled)  { filter: brightness(1.15); transform: scale(1.03); }
+.duel-move-btn:active:not(:disabled) { transform: scale(0.97); filter: brightness(0.9); }
+
+/* Locked move — greyed out, no pointer */
+.duel-move-locked {
+  filter: grayscale(1) brightness(0.55) !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+.duel-lock-icon {
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.duel-locked-label {
+  color: #aaa !important;
+  text-shadow: none !important;
+}
+
+.duel-cursor {
+  position: absolute;
+  left: 7px;
+  font-size: 0.5rem;
+  color: #1a0a00;
+  display: none;
+}
+
+.duel-move-btn:first-child .duel-cursor { display: inline; }
+.duel-move-btn:hover .duel-cursor       { display: inline; }
+.duel-move-selected .duel-cursor        { display: inline; }
+
+.duel-move-emoji {
+  font-size: clamp(0.8rem, 2.2vw, 1.1rem);
+  flex-shrink: 0;
+}
+
+.duel-move-label {
+  font-size: clamp(0.34rem, 1.3vw, 0.52rem);
+  white-space: pre-line;
+  line-height: 1.4;
+}
+
+/* Result in action box */
+.duel-result-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+}
+
+.duel-result-label {
+  font-size: clamp(0.4rem, 1.6vw, 0.62rem);
+  text-align: center;
+  animation: textPop 0.3s ease-out forwards;
+}
+
+.duel-result-icon {
+  font-size: clamp(1.6rem, 5vw, 2.8rem);
+  animation: iconBounce 0.4s ease-out forwards;
+}
+
+@keyframes iconBounce {
+  from { transform:scale(0.4); opacity:0; }
+  70%  { transform:scale(1.25); }
+  to   { transform:scale(1); opacity:1; }
+}
+
+/* ─────────────────────────────────────────────
+   MOBILE CONTROLS  (hidden on desktop)
+   Half-screen split: dpad grid left | guide right
+   ───────────────────────────────────────────── */
+.duel-mobile-controls {
+  display: none; /* hidden by default (desktop) */
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE — MOBILE  ≤768px
+   ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Battlefield takes exactly half the screen */
+  .duel-field {
+    flex: 0 0 50vh;
+    min-height: 0;
+  }
+
+  /* Hide the desktop bottom panel on mobile */
+  .duel-bottom {
+    display: none;
+  }
+
+  /* Show mobile controls — takes the lower 50vh */
+  .duel-mobile-controls {
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 50vh;
+    background: #e8e0c8;
+    border-top: 4px solid #2a1a0a;
+    overflow: hidden;
+  }
+
+  /* Left: 2×2 big move buttons (like dpad) */
+  .duel-mobile-moves {
+    flex: 0 0 60%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    border-right: 3px solid #2a1a0a;
+  }
+
+  .duel-mobile-btn {
+    background: transparent; /* image set via inline style */
+    border: none;
+    border-right: 2px solid #b0a888;
+    border-bottom: 2px solid #b0a888;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(0.36rem, 2.5vw, 0.55rem);
+    color: #fff;
+    text-shadow: 1px 1px 0 #000, 0 0 6px rgba(0,0,0,0.8);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 4px;
+    line-height: 1.3;
+    text-align: center;
+    transition: filter 0.1s, transform 0.08s;
+    margin: 3px;
+    border-radius: 4px;
+  }
+
+  .duel-mobile-btn:active:not(:disabled) { filter: brightness(0.88); transform: scale(0.96); }
+
+  .duel-mobile-btn:nth-child(2),
+  .duel-mobile-btn:nth-child(4) { border-right: none; }
+
+  .duel-mobile-btn:nth-child(3),
+  .duel-mobile-btn:nth-child(4) { border-bottom: none; }
+
+  .duel-mobile-emoji {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    line-height: 1;
+  }
+
+  .duel-mobile-label {
+    font-size: clamp(0.3rem, 2vw, 0.46rem);
+    text-align: center;
+    white-space: pre-line;
+    color: #fff;
+    text-shadow: 1px 1px 0 #000;
+  }
+
+  /* Right: guide panel */
+  .duel-mobile-guide {
+    flex: 1 1 40%;
+    background: #ede5cc;
+    padding: 8px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow-y: auto;
+  }
+
+  .duel-guide-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(0.32rem, 2vw, 0.48rem);
+    color: #8b0000;
+    border-bottom: 2px solid #2a1a0a;
+    padding-bottom: 5px;
+    margin-bottom: 3px;
+    text-align: center;
+  }
+
+  .duel-guide-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(0.26rem, 1.6vw, 0.38rem);
+    color: #1a0a00;
+    line-height: 1.5;
+  }
+
+  .duel-guide-desc {
+    color: #3a2010;
+    flex: 1;
+  }
+
+  /* Sprites — good size on mobile */
+  .duel-enemy-img {
+    width: clamp(130px, 28vw, 200px);
+    height: clamp(130px, 28vw, 200px);
+  }
+
+  .duel-player-img {
+    width: clamp(140px, 30vw, 210px);
+    height: clamp(140px, 30vw, 210px);
+  }
+
+  /* Info boxes slightly smaller on mobile */
+  .duel-info-box {
+    min-width: clamp(140px, 42vw, 210px);
+  }
+
+  /* Platforms */
+  .duel-platform-enemy {
+    bottom: 33%;
+    right: clamp(15px, 4vw, 50px);
+  }
+
+  .duel-platform-player {
+    bottom: 5%;
+    left: clamp(5px, 2vw, 30px);
+  }
+
+  .duel-sprite-enemy {
+    right: clamp(10px, 3vw, 40px);
+    bottom: 33%;
+  }
+
+  .duel-sprite-player {
+    left: clamp(5px, 2vw, 25px);
+    bottom: 5%;
+  }
+}
+
+/* Very short landscape phones */
+@media (max-width: 768px) and (max-height: 480px) {
+  .duel-field { flex: 0 0 45vh; }
+  .duel-mobile-controls { flex: 0 0 55vh; }
+}

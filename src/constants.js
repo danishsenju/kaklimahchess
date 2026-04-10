@@ -48,6 +48,7 @@ import seliparKemukaSfx from './soundeffect/seliparkemuka.mp3'
 import clickSoundSfx from './soundeffect/clicksound.mp3'
 import soleySoleySfx from './soundeffect/soleysoley.mp3'
 import tergelincirsoundSfx from './soundeffect/tergelincirsound.mp3'
+import nyawaTolakSfx from './soundeffect/nyawa-tolak.mp3'
 import duelSoundtrackSrc from './soundeffect/duel-soundtrack.mp3'
 import spikeTilesImg from './Images/spike-tiles.png'
 import husinWingameImg from './Images/husin-wingame.png'
@@ -143,6 +144,7 @@ export const SELIPAR_KEMUKA_SFX = seliparKemukaSfx;
 export const CLICK_SOUND_SFX = clickSoundSfx;
 export const SOLEY_SOLEY_SFX = soleySoleySfx;
 export const TERGELINCIR_SFX = tergelincirsoundSfx;
+export const NYAWA_TOLAK_SFX = nyawaTolakSfx;
 export const DUEL_SOUNDTRACK_SRC = duelSoundtrackSrc;
 export const SPIKE_TILES_IMG = spikeTilesImg;
 export const HUSIN_WINGAME_IMG = husinWingameImg;

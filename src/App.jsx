@@ -10,7 +10,7 @@ import {
   LIMAH_BACKGROUND_IMG, USOP_WILCHA_NANGIS_IMG, HUSINNN_SFX,
   BOMOH_SOFIJIKAN_IMG, DUKUN_JAWA_SFX, USOP_DUKUN_SFX,
   GAMEOVER_SFX, KAKLIMAH_BEKU_SFX, KUIH_SFX, SELIPAR_KEMUKA_SFX, CLICK_SOUND_SFX, SOLEY_SOLEY_SFX,
-  TERGELINCIR_SFX, DUEL_SOUNDTRACK_SRC, HUSIN_WINGAME_IMG,
+  TERGELINCIR_SFX, DUEL_SOUNDTRACK_SRC, HUSIN_WINGAME_IMG, NYAWA_TOLAK_SFX,
   BUKU_PANDUAN_IMG, SELIPAR_JEPUN_IMG,
   SELIPAR_CAMPAK_BTN_IMG, HUSIN_LARI_BTN_IMG,
   HUSIN_SPRITES, LIMAH_SPRITES, USOP_WILCHA_IMG, POWERUP_SPRITES,
@@ -387,6 +387,16 @@ function App() {
     }
     prevSpikeRef.current = hit;
   }, [state?.spikeHit, playSfx]);
+
+  // SFX: HP drops (-1 nyawa)
+  const prevHpRef = useRef(null);
+  useEffect(() => {
+    const hp = state?.player?.hp ?? null;
+    if (prevHpRef.current !== null && hp !== null && hp < prevHpRef.current) {
+      playSfx(NYAWA_TOLAK_SFX, 0.9);
+    }
+    prevHpRef.current = hp;
+  }, [state?.player?.hp, playSfx]);
 
   // Cleanup on unmount
   useEffect(() => {

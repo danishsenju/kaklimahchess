@@ -105,8 +105,9 @@ export default function DuelOverlay({ state, onChoice, onClose }) {
 
   if (!duel?.active) return null;
 
-  const maxHp  = 3;
-  const hpPct  = Math.max(0, Math.min(1, player.hp / maxHp));
+  // maxHp scales with karipap bonus — base 3 but can go higher
+  const maxHp   = Math.max(3, player.hp + (duel.resolved && duel.result === 'limah' ? 1 : 0));
+  const hpPct   = Math.max(0, Math.min(1, player.hp / maxHp));
   const hpColor = hpPct > 0.5 ? '#58c840' : hpPct > 0.25 ? '#f0c030' : '#e83020';
   const limahHpAfter = duel.resolved && duel.result === 'husin' ? '40%'
                      : duel.resolved && duel.result === 'draw'  ? '75%' : '100%';
@@ -239,8 +240,8 @@ export default function DuelOverlay({ state, onChoice, onClose }) {
                     onMouseEnter={() => !locked && setSelectedMove(move.key)}
                     onMouseLeave={() => setSelectedMove(null)}
                     disabled={locked}
-                    style={{ backgroundImage: `url(${DUEL_BUTTON_IMG})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}
                   >
+                    <img src={DUEL_BUTTON_IMG} alt="" className="duel-btn-bg" />
                     {locked ? (
                       <>
                         <span className="duel-lock-icon">🔒</span>
@@ -289,8 +290,8 @@ export default function DuelOverlay({ state, onChoice, onClose }) {
                   className={`duel-mobile-btn${locked ? ' duel-move-locked' : ''}`}
                   onClick={() => !locked && handleChoice(move.key)}
                   disabled={locked}
-                  style={{ backgroundImage: `url(${DUEL_BUTTON_MOBILE_IMG})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}
                 >
+                  <img src={DUEL_BUTTON_MOBILE_IMG} alt="" className="duel-btn-bg" />
                   {locked ? (
                     <>
                       <span className="duel-mobile-emoji">🔒</span>

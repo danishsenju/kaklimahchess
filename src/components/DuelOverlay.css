@@ -459,6 +459,28 @@
 .duel-move-btn:hover:not(:disabled)  { filter: brightness(1.15); transform: scale(1.03); }
 .duel-move-btn:active:not(:disabled) { transform: scale(0.97); filter: brightness(0.9); }
 
+/* Button background image — natural proportions, no stretch */
+.duel-btn-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* All content inside button sits above the bg image */
+.duel-move-btn .duel-cursor,
+.duel-move-btn .duel-move-emoji,
+.duel-move-btn .duel-move-label,
+.duel-move-btn .duel-lock-icon,
+.duel-move-btn .duel-locked-label {
+  position: relative;
+  z-index: 1;
+}
+
 /* Locked move — greyed out, no pointer */
 .duel-move-locked {
   filter: grayscale(1) brightness(0.55) !important;
@@ -595,6 +617,11 @@
   }
 
   .duel-mobile-btn:active:not(:disabled) { filter: brightness(0.88); transform: scale(0.96); }
+
+  /* Mobile button content above bg image */
+  .duel-mobile-btn .duel-btn-bg { object-fit: contain; }
+  .duel-mobile-btn .duel-mobile-emoji,
+  .duel-mobile-btn .duel-mobile-label { position: relative; z-index: 1; }
 
   .duel-mobile-btn:nth-child(2),
   .duel-mobile-btn:nth-child(4) { border-right: none; }

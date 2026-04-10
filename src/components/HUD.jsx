@@ -4,6 +4,7 @@ import './HUD.css'
 
 export default function HUD({ state }) {
   const { player, score, turn, movesLeft, ghostFrozen, ghostConfused, playerAtHome, carryingUsop } = state;
+  const MAX_DISPLAY_HP = 5;
 
   return (
     <div className="hud">
@@ -12,13 +13,14 @@ export default function HUD({ state }) {
         <div className="hud-item">
           <span className="hud-label">HP</span>
           <div className="hp-hearts">
-            {Array.from({ length: player.hp }).map((_, i) => (
+            {Array.from({ length: Math.min(player.hp, MAX_DISPLAY_HP) }).map((_, i) => (
               <span key={i} className="heart">♥</span>
             ))}
-            {Array.from({ length: Math.max(0, 5 - player.hp) }).map((_, i) => (
+            {Array.from({ length: Math.max(0, MAX_DISPLAY_HP - player.hp) }).map((_, i) => (
               <span key={`e-${i}`} className="heart-empty">♡</span>
             ))}
           </div>
+          <span className="hp-number">{player.hp}</span>
         </div>
 
         {/* Score */}

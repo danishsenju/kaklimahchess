@@ -47,6 +47,10 @@ import kuihSfx from './soundeffect/kuihsoundeffect.mp3'
 import seliparKemukaSfx from './soundeffect/seliparkemuka.mp3'
 import clickSoundSfx from './soundeffect/clicksound.mp3'
 import soleySoleySfx from './soundeffect/soleysoley.mp3'
+import tergelincirsoundSfx from './soundeffect/tergelincirsound.mp3'
+import duelSoundtrackSrc from './soundeffect/duel-soundtrack.mp3'
+import spikeTilesImg from './Images/spike-tiles.png'
+import husinWingameImg from './Images/husin-wingame.png'
 
 // Board dimensions
 export const BOARD_SIZE = 8;
@@ -138,6 +142,10 @@ export const KUIH_SFX = kuihSfx;
 export const SELIPAR_KEMUKA_SFX = seliparKemukaSfx;
 export const CLICK_SOUND_SFX = clickSoundSfx;
 export const SOLEY_SOLEY_SFX = soleySoleySfx;
+export const TERGELINCIR_SFX = tergelincirsoundSfx;
+export const DUEL_SOUNDTRACK_SRC = duelSoundtrackSrc;
+export const SPIKE_TILES_IMG = spikeTilesImg;
+export const HUSIN_WINGAME_IMG = husinWingameImg;
 
 // Game settings
 export const INITIAL_HP = 3;
@@ -155,7 +163,7 @@ export const FLAG_RESPAWN_INTERVAL = 8;  // new flag every 8 turns after bomoh d
 // Tile effect rules (for UI legend + logic reference)
 export const TILE_EFFECTS = {
   0: { name: 'Rumput', effect: 'Normal — gerak 1 langkah mana-mana arah' },
-  1: { name: 'Tanah Berlumpur', effect: 'Jebakan — masuk sini habis 2 langkah' },
+  1: { name: 'Tiles Berduri', effect: 'Bahaya — pijak sini -1 HP!' },
   2: { name: 'Lumut', effect: 'Licin — auto-gelincir 1 langkah lagi arah sama' },
   3: { name: 'Gelap', effect: 'Bayang — Hantu jadi keliru giliran ini' },
   6: { name: 'Kubur', effect: 'Portal — boleh teleport ke mana-mana kubur lain' },
@@ -167,7 +175,7 @@ export const GHOST_SPEED_UP_AFTER_TURN = 8;
 export const GHOST_AGGRO_RANGE = 4;
 
 // Board layout - horror chess board with trees as obstacles
-// 0=grass, 1=mud, 2=moss, 3=dark, 5=tree, 6=grave
+// 0=grass, 1=spike(duri), 2=moss, 3=dark, 5=tree, 6=grave
 // Trees block BOTH player AND ghost. Layout ensures all areas are connected.
 // Home (tempat selamat) position is randomized each game.
 export const BOARD_LAYOUT = [

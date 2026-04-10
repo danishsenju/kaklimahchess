@@ -4,7 +4,7 @@ import {
   HUSIN_SPRITES, LIMAH_SPRITES, POWERUP_SPRITES,
   TEMPAT_SELAMAT_IMG, USOP_WILCHA_IMG, POKOK_IMG,
   FLAG_TOLONG_IMG, BOMOH_FULLBODY_IMG, BOMOH_PENGSAN_IMG,
-  SELIPAR_JEPUN_IMG, HUSIN_SELIPAR_IMG, KUBUR_IMG, LUMUT_IMG, RUMPUT_IMG, TANAH_IMG,
+  SELIPAR_JEPUN_IMG, HUSIN_SELIPAR_IMG, KUBUR_IMG, LUMUT_IMG, RUMPUT_IMG, TANAH_IMG, SPIKE_TILES_IMG,
 } from '../constants'
 import './GameBoard.css'
 
@@ -69,6 +69,13 @@ export default function GameBoard({ state, lumutSlideOverride }) {
         {tileType === 0 && (
           <div className="rumput-decoration">
             <img src={RUMPUT_IMG} alt="" className="rumput-img" />
+          </div>
+        )}
+
+        {/* Spike duri (type-1) — -1 HP on step */}
+        {tileType === 1 && (
+          <div className="spike-decoration">
+            <img src={SPIKE_TILES_IMG} alt="Duri" className="spike-img" />
           </div>
         )}
 

@@ -925,6 +925,22 @@
 }
 
 /* ===== TANAH BASE FOR KUBUR PORTAL ===== */
+/* ===== SPIKE DURI TILE DECORATION ===== */
+.spike-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.spike-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1px;
+}
+
 .tanah-decoration {
   position: absolute;
   inset: 0;

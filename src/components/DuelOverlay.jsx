@@ -248,11 +248,7 @@ export default function DuelOverlay({ state, onChoice, onClose }) {
                         <span className="duel-move-label duel-locked-label">{move.label}</span>
                       </>
                     ) : (
-                      <>
-                        <span className="duel-cursor">▶</span>
-                        <span className="duel-move-emoji">{move.emoji}</span>
-                        <span className="duel-move-label">{move.label}</span>
-                      </>
+                      <span className="duel-move-label">{move.label}</span>
                     )}
                   </button>
                 );
@@ -298,10 +294,7 @@ export default function DuelOverlay({ state, onChoice, onClose }) {
                       <span className="duel-mobile-label">{move.label.replace('\n', ' ')}</span>
                     </>
                   ) : (
-                    <>
-                      <span className="duel-mobile-emoji">{move.emoji}</span>
-                      <span className="duel-mobile-label">{move.label.replace('\n', ' ')}</span>
-                    </>
+                    <span className="duel-mobile-label">{move.label.replace('\n', ' ')}</span>
                   )}
                 </button>
               );

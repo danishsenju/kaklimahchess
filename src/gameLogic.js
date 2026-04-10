@@ -12,7 +12,7 @@ import {
 const FIXED_TREES = [[2,2],[3,6],[5,2],[7,4]];
 
 // Generate a random 8x8 board layout each new game.
-// Tile codes: 0=rumput, 1=tanah berlumpur, 2=lumut, 3=gelap, 5=pokok(wall), 6=kubur portal
+// Tile codes: 0=rumput, 1=spike duri(-1HP), 2=lumut, 3=gelap, 5=pokok(wall), 6=kubur portal
 function generateBoardLayout() {
   const layout = Array.from({ length: BOARD_SIZE }, () => Array(BOARD_SIZE).fill(0));
 
@@ -380,9 +380,9 @@ export function processMove(state, dir) {
     }
   }
 
-  // ===== TILE EFFECT: TANAH BERLUMPUR (1) — melekit! kena 1 langkah extra =====
-  const mudCost = layout[finalPos.row][finalPos.col] === 1 ? 1 : 0;
-  const totalCost = 1 + slideMoveCost + mudCost;
+  // ===== TILE EFFECT: SPIKE DURI (1) — -1 HP! =====
+  const onSpike = layout[finalPos.row][finalPos.col] === 1;
+  const totalCost = 1 + slideMoveCost;
 
   let newState = {
     ...state,
@@ -399,9 +399,15 @@ export function processMove(state, dir) {
     newState.message = 'Terpeleset ke arah Kak Limah! Tolong!!!';
     newState.messageTimer = 3;
   }
-  if (mudCost > 0) {
-    newState.message = 'Tanah melekit! Husin terperosok -1 langkah!';
+  if (onSpike) {
+    newState.player = { ...newState.player, hp: newState.player.hp - 1 };
+    newState.spikeHit = true;
+    newState.message = 'Aduh! Pijak duri! -1 HP!';
     newState.messageTimer = 2;
+    if (newState.player.hp <= 0) {
+      newState.gameOver = true;
+      return newState;
+    }
   }
 
   const hp = state.homePos;

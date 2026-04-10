@@ -10,6 +10,7 @@ import {
   LIMAH_BACKGROUND_IMG, USOP_WILCHA_NANGIS_IMG, HUSINNN_SFX,
   BOMOH_SOFIJIKAN_IMG, DUKUN_JAWA_SFX, USOP_DUKUN_SFX,
   GAMEOVER_SFX, KAKLIMAH_BEKU_SFX, KUIH_SFX, SELIPAR_KEMUKA_SFX, CLICK_SOUND_SFX, SOLEY_SOLEY_SFX,
+  TERGELINCIR_SFX, DUEL_SOUNDTRACK_SRC, HUSIN_WINGAME_IMG,
   BUKU_PANDUAN_IMG, SELIPAR_JEPUN_IMG,
   SELIPAR_CAMPAK_BTN_IMG, HUSIN_LARI_BTN_IMG,
   HUSIN_SPRITES, LIMAH_SPRITES, USOP_WILCHA_IMG, POWERUP_SPRITES,
@@ -38,6 +39,7 @@ function App() {
   const sfxListRef = useRef([]);
   const bomohTimerRef = useRef(null);
   const deathTimerRef = useRef(null);
+  const duelBgmRef = useRef(null);
 
   // SFX player - tracked so we can stop them on restart
   const stopAllSfx = useCallback(() => {
@@ -129,6 +131,7 @@ function App() {
 
   const goToMenu = useCallback(() => {
     stopBgm();
+    if (duelBgmRef.current) { duelBgmRef.current.pause(); duelBgmRef.current = null; }
     cleanupAudio();
     stopAllSfx();
     setGameState(GAME_STATE.MENU);
@@ -324,9 +327,10 @@ function App() {
   // SFX: Win - Husin selamat
   useEffect(() => {
     if (state?.win) {
+      stopBgm();
       playSfx(SOLEY_SOLEY_SFX, 0.8);
     }
-  }, [state?.win, playSfx]);
+  }, [state?.win, playSfx, stopBgm]);
 
   // SFX: Kak Limah frozen or stunned
   const prevFrozenRef = useRef(0);
@@ -348,15 +352,41 @@ function App() {
     prevScoreRef.current = score;
   }, [state?.score, playSfx]);
 
-  // SFX: Duel triggered
+  // SFX: Duel triggered — pause BGM, play duel soundtrack; resume BGM when duel ends
   const prevDuelRef = useRef(false);
   useEffect(() => {
     const duelActive = !!(state?.duel?.active && !state?.duel?.resolved);
     if (duelActive && !prevDuelRef.current) {
-      playSfx(KAKLIMAH_BEKU_SFX, 0.6); // dramatic sting when duel appears
+      // Pause BGM
+      if (bgmRef.current) bgmRef.current.pause();
+      // Play duel soundtrack on loop
+      try {
+        const ds = new Audio(DUEL_SOUNDTRACK_SRC);
+        ds.loop = true;
+        ds.volume = 0.7;
+        ds.play().catch(() => {});
+        duelBgmRef.current = ds;
+      } catch (e) { /* */ }
+    } else if (!duelActive && prevDuelRef.current) {
+      // Duel ended — stop duel soundtrack, resume BGM
+      if (duelBgmRef.current) {
+        duelBgmRef.current.pause();
+        duelBgmRef.current = null;
+      }
+      if (bgmRef.current) bgmRef.current.play().catch(() => {});
     }
     prevDuelRef.current = duelActive;
-  }, [state?.duel?.active, state?.duel?.resolved, playSfx]);
+  }, [state?.duel?.active, state?.duel?.resolved]);
+
+  // SFX: Spike duri hit
+  const prevSpikeRef = useRef(false);
+  useEffect(() => {
+    const hit = !!(state?.spikeHit);
+    if (hit && !prevSpikeRef.current) {
+      playSfx(TERGELINCIR_SFX, 0.8);
+    }
+    prevSpikeRef.current = hit;
+  }, [state?.spikeHit, playSfx]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -659,8 +689,8 @@ function App() {
                       <div className="guide-item guide-item-tile">
                         <div className="guide-tile-swatch guide-tile-mud" />
                         <div className="guide-item-text">
-                          <strong>🪨 Tanah Berlumpur (JEBAKAN!)</strong>
-                          <span>Masuk sini habis 2 langkah! Kaki terperosok dalam lumpur. Kalau Kak Limah dekat — memang habis lah.</span>
+                          <strong>🩸 Tiles Berduri (BAHAYA!)</strong>
+                          <span>Pijak sini terus -1 HP! Elak atau mati!</span>
                         </div>
                       </div>
                       <div className="guide-item guide-item-tile">
@@ -734,6 +764,7 @@ function App() {
       {(gameState === GAME_STATE.GAME_OVER || gameState === GAME_STATE.WIN) && state && (
         <GameOverScreen
           win={gameState === GAME_STATE.WIN}
+          winImg={HUSIN_WINGAME_IMG}
           score={state.score}
           turns={state.turn}
           onRestart={startGame}

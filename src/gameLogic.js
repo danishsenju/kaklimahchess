@@ -654,13 +654,20 @@ function endTurn(state) {
       // Ghost chases player
       const target = { row: newState.player.row, col: newState.player.col };
 
-      // ===== TILE EFFECT: KAWASAN GELAP (3) — Husin sorok, hantu jadi blur =====
+      // ===== TILE EFFECT: KAWASAN GELAP (3) — 50/50 luck =====
       const playerOnDark = layout[newState.player.row][newState.player.col] === 3;
+      let darkSafe = false;
       if (playerOnDark) {
-        newState.message = 'Husin sorok dalam gelap! Kak Limah jadi lembu!';
+        const lucky = Math.random() < 0.5;
+        if (lucky) {
+          darkSafe = true;
+          newState.message = 'Nasib baik! Kak Limah tak nampak Husin dalam gelap!';
+        } else {
+          newState.message = 'Malang! Kak Limah nampak Husin walaupun dalam gelap!';
+        }
         newState.messageTimer = 2;
       }
-      const isConfused = newState.ghostConfused > 0 || newState.playerAtHome || playerOnDark;
+      const isConfused = newState.ghostConfused > 0 || newState.playerAtHome || darkSafe;
 
       const move1 = getGhostMoveToward(
         { row: newState.ghost.row, col: newState.ghost.col },

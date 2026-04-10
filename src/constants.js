@@ -173,7 +173,7 @@ export const TILE_EFFECTS = {
   0: { name: 'Rumput', effect: 'Normal — gerak 1 langkah mana-mana arah' },
   1: { name: 'Tiles Berduri', effect: 'Bahaya — pijak sini -1 HP!' },
   2: { name: 'Lumut', effect: 'Licin — auto-gelincir 1 langkah lagi arah sama' },
-  3: { name: 'Kawasan Gelap', effect: 'Bius Hantu — Kak Limah keliru giliran ini' },
+  3: { name: 'Kawasan Gelap', effect: '50/50 — nasib baik selamat, nasib malang kena kejar!' },
   6: { name: 'Kubur', effect: 'Portal — boleh teleport ke mana-mana kubur lain' },
 };
 

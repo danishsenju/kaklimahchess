@@ -312,8 +312,8 @@ export default function MainMenu({ onStart, playClick }) {
                   <div className="guide-item">
                     <img src={BLACK_HOLE_IMG} alt="Kawasan Gelap" className="guide-icon" style={{borderRadius:'4px'}} />
                     <div className="guide-item-text">
-                      <strong>🌑 Kawasan Gelap</strong>
-                      <span>Berdiri sini = Kak Limah terpinga-pinga keliru 1 giliran. Dia jadi lembu kejap!</span>
+                      <strong>🌑 Kawasan Gelap (50/50!)</strong>
+                      <span>Nasib-nasib! 50% Kak Limah tak nampak kau, 50% dia nampak jugak. Jangan harap sangat!</span>
                     </div>
                   </div>
                 </div>

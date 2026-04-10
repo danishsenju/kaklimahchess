@@ -719,8 +719,8 @@ function App() {
                           <img src={BLACK_HOLE_IMG} alt="Kawasan Gelap" style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:'3px'}} />
                         </div>
                         <div className="guide-item-text">
-                          <strong>🌑 Kawasan Gelap (BIUS HANTU!)</strong>
-                          <span>Berdiri sini = Kak Limah terpinga-pinga macam orang baru kena tenyeh minyak angin. Dia keliru 1 giliran — pusing sana sini tak tahu nak ke mana!</span>
+                          <strong>🌑 Kawasan Gelap (50/50!)</strong>
+                          <span>Pijak sini = nasib-nasib! 50% Kak Limah tak nampak kau (selamat!), 50% dia nampak jugak (malang!). Jangan harap sangat!</span>
                         </div>
                       </div>
                       <div className="guide-item guide-item-tile">

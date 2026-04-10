@@ -16,7 +16,7 @@ import {
   HUSIN_SPRITES, LIMAH_SPRITES, USOP_WILCHA_IMG, POWERUP_SPRITES,
   TEMPAT_SELAMAT_IMG, FLAG_TOLONG_IMG, BOMOH_FULLBODY_IMG,
   INGAME_SOUND_SRC,
-  LUMUT_IMG, RUMPUT_IMG, TANAH_IMG, KUBUR_IMG,
+  LUMUT_IMG, RUMPUT_IMG, TANAH_IMG, KUBUR_IMG, SPIKE_TILES_IMG,
 } from './constants'
 import { createInitialState, processMove, applySeliparChoice, applyGraveJump, cancelGraveJump, resolveDuel } from './gameLogic'
 import './App.css'
@@ -697,10 +697,12 @@ function App() {
                         </div>
                       </div>
                       <div className="guide-item guide-item-tile">
-                        <div className="guide-tile-swatch guide-tile-mud" />
+                        <div className="guide-tile-swatch" style={{overflow:'hidden'}}>
+                          <img src={SPIKE_TILES_IMG} alt="Duri" style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:'3px'}} />
+                        </div>
                         <div className="guide-item-text">
                           <strong>🩸 Tiles Berduri (BAHAYA!)</strong>
-                          <span>Pijak sini terus -1 HP! Elak atau mati!</span>
+                          <span>Pijak sini terus -1 HP! Kak Limah suka tengok kau terseksa.</span>
                         </div>
                       </div>
                       <div className="guide-item guide-item-tile">
@@ -715,8 +717,8 @@ function App() {
                       <div className="guide-item guide-item-tile">
                         <div className="guide-tile-swatch guide-tile-dark" />
                         <div className="guide-item-text">
-                          <strong>🌑 Kawasan Gelap (SOROK!)</strong>
-                          <span>Berdiri sini = Kak Limah jadi blur & terpusing-pusing macam orang baru bangun tidur giliran tu.</span>
+                          <strong>🌑 Kawasan Gelap (BIUS HANTU!)</strong>
+                          <span>Berdiri sini = Kak Limah terpinga-pinga macam orang baru kena tenyeh minyak angin. Dia keliru 1 giliran — pusing sana sini tak tahu nak ke mana!</span>
                         </div>
                       </div>
                       <div className="guide-item guide-item-tile">

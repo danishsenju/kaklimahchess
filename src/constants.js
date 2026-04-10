@@ -52,6 +52,8 @@ import nyawaTolakSfx from './soundeffect/nyawa-tolak.mp3'
 import duelSoundtrackSrc from './soundeffect/duel-soundtrack.mp3'
 import spikeTilesImg from './Images/spike-tiles.png'
 import husinWingameImg from './Images/husin-wingame.png'
+import kakLimahMenangImg from './Images/kak-kimahmenang.png'
+import frontPageImg from './Images/front-page.png'
 
 // Board dimensions
 export const BOARD_SIZE = 8;
@@ -148,6 +150,8 @@ export const NYAWA_TOLAK_SFX = nyawaTolakSfx;
 export const DUEL_SOUNDTRACK_SRC = duelSoundtrackSrc;
 export const SPIKE_TILES_IMG = spikeTilesImg;
 export const HUSIN_WINGAME_IMG = husinWingameImg;
+export const KAK_LIMAH_MENANG_IMG = kakLimahMenangImg;
+export const FRONT_PAGE_IMG = frontPageImg;
 
 // Game settings
 export const INITIAL_HP = 3;

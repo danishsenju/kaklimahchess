@@ -16,6 +16,15 @@
 }
 
 /* ===== BACKGROUND LAYERS ===== */
+.menu-bg-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
 .menu-bg-gradient {
   position: absolute;
   inset: 0;

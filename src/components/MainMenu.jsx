@@ -3,7 +3,7 @@ import {
   LIMAH_SPRITES, HUSIN_SPRITES, POWERUP_SPRITES,
   TEMPAT_SELAMAT_IMG, USOP_WILCHA_IMG, BUKU_PANDUAN_IMG,
   FLAG_TOLONG_IMG, BOMOH_FULLBODY_IMG, SELIPAR_JEPUN_IMG,
-  DIR, POWERUP,
+  DIR, POWERUP, FRONT_PAGE_IMG, SPIKE_TILES_IMG,
 } from '../constants'
 import './MainMenu.css'
 
@@ -60,6 +60,7 @@ export default function MainMenu({ onStart, playClick }) {
   return (
     <div className="main-menu">
       {/* Atmospheric background layers */}
+      <div className="menu-bg-img" style={{ backgroundImage: `url(${FRONT_PAGE_IMG})` }} />
       <div className="menu-bg-gradient" />
       <div className="menu-fog fog-1" />
       <div className="menu-fog fog-2" />
@@ -196,7 +197,7 @@ export default function MainMenu({ onStart, playClick }) {
             / Arrow Keys
           </span>
           <span className="footer-sep">|</span>
-          <span className="footer-ver">v1.0</span>
+          <span className="footer-ver">v2.0</span>
         </div>
       </div>
       </div>
@@ -298,6 +299,20 @@ export default function MainMenu({ onStart, playClick }) {
                     <div className="guide-item-text">
                       <strong>Bomoh</strong>
                       <span>Hantu pergi bunuh bomoh dulu. Kau boleh lari masa tu!</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tiles Section */}
+              <div className="guide-section">
+                <h4 className="guide-section-title">⚠️ JENIS LANTAI</h4>
+                <div className="guide-grid">
+                  <div className="guide-item">
+                    <img src={SPIKE_TILES_IMG} alt="Duri" className="guide-icon" style={{borderRadius:'4px'}} />
+                    <div className="guide-item-text">
+                      <strong>🩸 Tiles Berduri</strong>
+                      <span>Pijak = terus -1 HP! Kak Limah senyum je tengok kau terseksa.</span>
                     </div>
                   </div>
                 </div>

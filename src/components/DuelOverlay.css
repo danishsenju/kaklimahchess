@@ -650,7 +650,7 @@
 
   .duel-guide-title {
     font-family: 'Press Start 2P', monospace;
-    font-size: clamp(0.32rem, 2vw, 0.48rem);
+    font-size: clamp(0.42rem, 2.5vw, 0.62rem);
     color: #8b0000;
     border-bottom: 2px solid #2a1a0a;
     padding-bottom: 5px;
@@ -661,11 +661,11 @@
   .duel-guide-row {
     display: flex;
     align-items: flex-start;
-    gap: 5px;
+    gap: 6px;
     font-family: 'Press Start 2P', monospace;
-    font-size: clamp(0.26rem, 1.6vw, 0.38rem);
+    font-size: clamp(0.36rem, 2vw, 0.52rem);
     color: #1a0a00;
-    line-height: 1.5;
+    line-height: 1.7;
   }
 
   .duel-guide-desc {

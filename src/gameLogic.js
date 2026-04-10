@@ -391,6 +391,7 @@ export function processMove(state, dir) {
     bomohJustSpawned: false,
     bomohJustDied: false,
     showSmoke: null,
+    spikeHit: false,
   };
 
   if (slideMoveCost > 0) {

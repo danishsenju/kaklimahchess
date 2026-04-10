@@ -287,7 +287,7 @@
 }
 
 .buku-panduan-img {
-  width: 120px;
+  width: 180px;
   height: auto;
   image-rendering: pixelated;
   filter: drop-shadow(2px 3px 6px rgba(0, 0, 0, 0.8));

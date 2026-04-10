@@ -380,6 +380,22 @@
 }
 
 /* ===== CHARACTER SHOWCASE ===== */
+/* New showcase: just the image, natural size */
+.menu-showcase-img-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-showcase-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: pixelated;
+  border-radius: 6px;
+}
+
+/* Keep old .menu-showcase class for any leftover refs */
 .menu-showcase {
   display: flex;
   align-items: center;
@@ -1019,6 +1035,78 @@
 .guide-section-tips {
   border-top: 1px solid rgba(201, 168, 76, 0.1);
   padding-top: 12px;
+}
+
+/* ===== DUEL GUIDE CARDS ===== */
+.guide-section-duel {
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
+  padding-top: 12px;
+}
+
+.guide-duel-intro {
+  font-family: var(--font-pixel, 'Press Start 2P', monospace);
+  font-size: clamp(0.38rem, 1.3vw, 0.52rem);
+  color: rgba(200, 190, 160, 0.85);
+  line-height: 1.8;
+  margin: 0 0 12px 0;
+}
+
+.guide-duel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.guide-duel-card {
+  background: rgba(10, 5, 20, 0.7);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 8px;
+  padding: 10px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: border-color 0.2s;
+}
+
+.guide-duel-card:hover {
+  border-color: rgba(201, 168, 76, 0.55);
+}
+
+.guide-duel-emoji {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1;
+  text-align: center;
+}
+
+.guide-duel-name {
+  font-family: var(--font-pixel, 'Press Start 2P', monospace);
+  font-size: clamp(0.38rem, 1.2vw, 0.52rem);
+  color: #c9a84c;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.guide-duel-effect {
+  font-family: var(--font-pixel, 'Press Start 2P', monospace);
+  font-size: clamp(0.32rem, 1vw, 0.44rem);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.guide-duel-effect.win  { color: #58f870; }
+.guide-duel-effect.lose { color: #f85050; }
+
+.guide-duel-warning {
+  font-family: var(--font-pixel, 'Press Start 2P', monospace);
+  font-size: clamp(0.34rem, 1.1vw, 0.48rem);
+  color: #ffaa44;
+  background: rgba(255, 100, 0, 0.1);
+  border: 1px solid rgba(255, 100, 0, 0.3);
+  border-radius: 6px;
+  padding: 8px 10px;
+  line-height: 1.8;
+  text-align: center;
 }
 
 /* ===== GUIDE CLOSE BUTTON ===== */

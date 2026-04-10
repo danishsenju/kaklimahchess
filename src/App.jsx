@@ -736,6 +736,39 @@ function App() {
                     </div>
                   </div>
 
+                  {/* Duel Guide */}
+                  <div className="guide-section guide-section-duel">
+                    <h4 className="guide-section-title">⚔️ SISTEM DUEL</h4>
+                    <p className="guide-duel-intro">Bila Kak Limah tangkap Husin — DUEL! Pilih serangan. Menang = selamat. Kalah = -1 HP!</p>
+                    <div className="guide-duel-grid">
+                      <div className="guide-duel-card">
+                        <div className="guide-duel-emoji">🔫</div>
+                        <div className="guide-duel-name">PANGGIL ANAK SI MAMAT</div>
+                        <div className="guide-duel-effect win">✅ Menang → Beku 4 giliran</div>
+                        <div className="guide-duel-effect lose">❌ Kalah → -1 HP</div>
+                      </div>
+                      <div className="guide-duel-card">
+                        <div className="guide-duel-emoji">🏃</div>
+                        <div className="guide-duel-name">CABUT LARI</div>
+                        <div className="guide-duel-effect win">✅ Menang → Teleport jauh</div>
+                        <div className="guide-duel-effect lose">❌ Kalah → Kena selipar</div>
+                      </div>
+                      <div className="guide-duel-card">
+                        <div className="guide-duel-emoji">🍛</div>
+                        <div className="guide-duel-name">SUAP NASI</div>
+                        <div className="guide-duel-effect win">✅ Menang → Keliru 3 giliran</div>
+                        <div className="guide-duel-effect lose">❌ Kalah → Kena periuk</div>
+                      </div>
+                      <div className="guide-duel-card">
+                        <div className="guide-duel-emoji">😱</div>
+                        <div className="guide-duel-name">JERIT "MAK!"</div>
+                        <div className="guide-duel-effect win">✅ 50/50 → Beku 1 giliran</div>
+                        <div className="guide-duel-effect lose">❌ 50/50 → -1 HP</div>
+                      </div>
+                    </div>
+                    <div className="guide-duel-warning">⚠️ Setiap serangan yang menang akan TERKUNCI — tak boleh guna lagi! Kalau semua 4 kena lock, AUTO KALAH!</div>
+                  </div>
+
                   <div className="guide-section guide-section-tips">
                     <h4 className="guide-section-title">TIPS PRO</h4>
                     <div className="guide-tips guide-funny">

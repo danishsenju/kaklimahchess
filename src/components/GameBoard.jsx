@@ -4,7 +4,7 @@ import {
   HUSIN_SPRITES, LIMAH_SPRITES, POWERUP_SPRITES,
   TEMPAT_SELAMAT_IMG, USOP_WILCHA_IMG, POKOK_IMG,
   FLAG_TOLONG_IMG, BOMOH_FULLBODY_IMG, BOMOH_PENGSAN_IMG,
-  SELIPAR_JEPUN_IMG, HUSIN_SELIPAR_IMG, KUBUR_IMG, LUMUT_IMG, RUMPUT_IMG, TANAH_IMG, SPIKE_TILES_IMG,
+  SELIPAR_JEPUN_IMG, HUSIN_SELIPAR_IMG, KUBUR_IMG, LUMUT_IMG, RUMPUT_IMG, TANAH_IMG, SPIKE_TILES_IMG, BLACK_HOLE_IMG,
 } from '../constants'
 import './GameBoard.css'
 
@@ -96,6 +96,13 @@ export default function GameBoard({ state, lumutSlideOverride }) {
         {isObstacle && (
           <div className="tree-obstacle">
             <img src={POKOK_IMG} alt="Pokok" className="pokok-img" />
+          </div>
+        )}
+
+        {/* Kawasan Gelap (dark type-3) — black hole image */}
+        {tileType === 3 && (
+          <div className="blackhole-decoration">
+            <img src={BLACK_HOLE_IMG} alt="Kawasan Gelap" className="blackhole-img" />
           </div>
         )}
 

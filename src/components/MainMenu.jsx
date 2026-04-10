@@ -142,41 +142,9 @@ export default function MainMenu({ onStart, playClick }) {
           </div>
         </div>
 
-        {/* Character Showcase - Nintendo style */}
-        <div className="menu-showcase" style={{ backgroundImage: `url(${FRONT_PAGE_IMG})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-          {/* Husin side */}
-          <div className="showcase-char showcase-husin">
-            <div className="char-platform" />
-            <div className="char-glow husin-glow" />
-            <img src={HUSIN_SPRITES[DIR.RIGHT]} alt="Husin" className="showcase-img" />
-            <div className="char-nameplate">
-              <span className="char-name">HUSIN</span>
-              <span className="char-title">Pelari Kampung</span>
-            </div>
-          </div>
-
-          {/* VS emblem */}
-          <div className="showcase-vs">
-            <div className="vs-burst" />
-            <div className="vs-circle">
-              <span>VS</span>
-            </div>
-            <div className="vs-spark vs-spark-1" />
-            <div className="vs-spark vs-spark-2" />
-            <div className="vs-spark vs-spark-3" />
-            <div className="vs-spark vs-spark-4" />
-          </div>
-
-          {/* Kak Limah side */}
-          <div className="showcase-char showcase-limah">
-            <div className="char-platform limah-platform" />
-            <div className="char-glow limah-glow" />
-            <img src={LIMAH_SPRITES[DIR.LEFT]} alt="Kak Limah" className="showcase-img limah-img" />
-            <div className="char-nameplate limah-nameplate">
-              <span className="char-name limah-name">KAK LIMAH</span>
-              <span className="char-title">Hantu Kampung</span>
-            </div>
-          </div>
+        {/* Character Showcase — front-page.png exact size, no crop */}
+        <div className="menu-showcase-img-wrap">
+          <img src={FRONT_PAGE_IMG} alt="Hantu Kak Limah VS Husin" className="menu-showcase-img" />
         </div>
 
         {/* Rotating tagline */}

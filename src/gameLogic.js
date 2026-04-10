@@ -257,7 +257,8 @@ function pickRandomStart(occupied, layout, minDist = 3) {
     const row = Math.floor(Math.random() * BOARD_SIZE);
     const col = Math.floor(Math.random() * BOARD_SIZE);
     if (!isValidMove(row, col, layout)) { attempts++; continue; }
-    if (layout[row][col] === 1) { attempts++; continue; }  // skip mud
+    if (layout[row][col] === 1) { attempts++; continue; }  // skip spike
+    if (layout[row][col] === 2) { attempts++; continue; }  // skip lumut
     if (layout[row][col] === 6) { attempts++; continue; }  // skip grave portal
     if (occupied.some(p => p && samePos(p, { row, col }))) { attempts++; continue; }
     if (minDist > 0 && occupied.some(p => p && distance(p, { row, col }) < minDist)) { attempts++; continue; }

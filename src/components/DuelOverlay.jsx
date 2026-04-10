@@ -240,8 +240,8 @@ export default function DuelOverlay({ state, onChoice, onClose }) {
                     onMouseEnter={() => !locked && setSelectedMove(move.key)}
                     onMouseLeave={() => setSelectedMove(null)}
                     disabled={locked}
+                    style={{ backgroundImage: `url(${DUEL_BUTTON_IMG})` }}
                   >
-                    <img src={DUEL_BUTTON_IMG} alt="" className="duel-btn-bg" />
                     {locked ? (
                       <>
                         <span className="duel-lock-icon">🔒</span>
@@ -290,8 +290,8 @@ export default function DuelOverlay({ state, onChoice, onClose }) {
                   className={`duel-mobile-btn${locked ? ' duel-move-locked' : ''}`}
                   onClick={() => !locked && handleChoice(move.key)}
                   disabled={locked}
+                  style={{ backgroundImage: `url(${DUEL_BUTTON_MOBILE_IMG})` }}
                 >
-                  <img src={DUEL_BUTTON_MOBILE_IMG} alt="" className="duel-btn-bg" />
                   {locked ? (
                     <>
                       <span className="duel-mobile-emoji">🔒</span>

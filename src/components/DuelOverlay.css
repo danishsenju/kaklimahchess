@@ -427,59 +427,44 @@
   align-items: stretch;
 }
 
-/* 2×2 grid exactly like Pokemon */
+/* 2×2 grid — desktop */
 .duel-move-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  gap: 6px;
+  padding: 8px;
   width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  align-content: center;
 }
 
 .duel-move-btn {
-  position: relative;
-  background: transparent; /* image set via inline style */
+  /* aspect-ratio matches duel-button.png landscape shape exactly */
+  aspect-ratio: 3.5 / 1;
+  background-color: transparent;
+  /* 100% 100% fills perfectly — no distortion since container ratio = image ratio */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   border: none;
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(0.36rem, 1.4vw, 0.56rem);
+  font-size: clamp(0.3rem, 1.1vw, 0.5rem);
   color: #fff;
-  text-shadow: 1px 1px 0 #000, 0 0 6px rgba(0,0,0,0.8);
+  text-shadow: 1px 1px 0 #000, 0 0 8px rgba(0,0,0,0.9);
   cursor: pointer;
-  text-align: left;
-  padding: 6px 8px 6px 22px;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 5px;
+  padding: 0 6px 0 18px;
   letter-spacing: 0.02em;
-  line-height: 1.2;
-  transition: filter 0.1s, transform 0.08s;
-  margin: 3px;
-  border-radius: 4px;
+  line-height: 1.3;
+  transition: filter 0.12s, transform 0.08s;
+  min-width: 0;
 }
 
-.duel-move-btn:hover:not(:disabled)  { filter: brightness(1.15); transform: scale(1.03); }
-.duel-move-btn:active:not(:disabled) { transform: scale(0.97); filter: brightness(0.9); }
-
-/* Button background image — natural proportions, no stretch */
-.duel-btn-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* All content inside button sits above the bg image */
-.duel-move-btn .duel-cursor,
-.duel-move-btn .duel-move-emoji,
-.duel-move-btn .duel-move-label,
-.duel-move-btn .duel-lock-icon,
-.duel-move-btn .duel-locked-label {
-  position: relative;
-  z-index: 1;
-}
+.duel-move-btn:hover:not(:disabled)  { filter: brightness(1.25); transform: scale(1.04); }
+.duel-move-btn:active:not(:disabled) { transform: scale(0.96); filter: brightness(0.82); }
 
 /* Locked move — greyed out, no pointer */
 .duel-move-locked {
@@ -584,50 +569,43 @@
     overflow: hidden;
   }
 
-  /* Left: 2×2 big move buttons (like dpad) */
+  /* Left: 2×2 square buttons matching duel-buttonmobile.png (1:1) */
   .duel-mobile-moves {
     flex: 0 0 60%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    gap: 6px;
+    padding: 8px;
     border-right: 3px solid #2a1a0a;
+    align-content: center;
+    box-sizing: border-box;
   }
 
   .duel-mobile-btn {
-    background: transparent; /* image set via inline style */
+    /* aspect-ratio 1:1 matches duel-buttonmobile.png square shape */
+    aspect-ratio: 1 / 1;
+    background-color: transparent;
+    /* 100% 100% fills perfectly — no distortion since 1:1 matches image */
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     border: none;
-    border-right: 2px solid #b0a888;
-    border-bottom: 2px solid #b0a888;
     font-family: 'Press Start 2P', monospace;
-    font-size: clamp(0.36rem, 2.5vw, 0.55rem);
+    font-size: clamp(0.3rem, 2vw, 0.48rem);
     color: #fff;
-    text-shadow: 1px 1px 0 #000, 0 0 6px rgba(0,0,0,0.8);
+    text-shadow: 1px 1px 0 #000, 0 0 8px rgba(0,0,0,0.9);
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 4px;
-    padding: 8px 4px;
+    padding: 6px 4px;
     line-height: 1.3;
     text-align: center;
-    transition: filter 0.1s, transform 0.08s;
-    margin: 3px;
-    border-radius: 4px;
+    transition: filter 0.12s, transform 0.08s;
   }
 
-  .duel-mobile-btn:active:not(:disabled) { filter: brightness(0.88); transform: scale(0.96); }
-
-  /* Mobile button content above bg image */
-  .duel-mobile-btn .duel-btn-bg { object-fit: contain; }
-  .duel-mobile-btn .duel-mobile-emoji,
-  .duel-mobile-btn .duel-mobile-label { position: relative; z-index: 1; }
-
-  .duel-mobile-btn:nth-child(2),
-  .duel-mobile-btn:nth-child(4) { border-right: none; }
-
-  .duel-mobile-btn:nth-child(3),
-  .duel-mobile-btn:nth-child(4) { border-bottom: none; }
+  .duel-mobile-btn:active:not(:disabled) { filter: brightness(0.85); transform: scale(0.96); }
 
   .duel-mobile-emoji {
     font-size: clamp(1.4rem, 6vw, 2rem);

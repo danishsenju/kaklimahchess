@@ -5,7 +5,7 @@ import './GameOverScreen.css'
 const LOSE_TEXTS = [
   { title: 'KAK LIMAH MENANG!', sub: 'Husin dah kena tampar. Cuba lagi, mana tau kali ni laju sikit.' },
   { title: 'ADUH, KANTOI!', sub: 'Kak Limah kata: "Nak lari? Mana boleh lari dari takdir!"' },
-  { title: 'HUSIN PENGSAN!', sub: 'Selipar Kak Limah lagi laju dari Husin. Lawak betul.' },
+  { title: 'HUSIN PENGSAN!', sub: 'Selipar Kak Limah lagi laju dari Husin.' },
   { title: 'GAME OVER, BRO!', sub: 'Usop tunggu lama sangat sampai dia dah tidur dalam kerusi roda.' },
   { title: 'KAK LIMAH GELAK!', sub: '"Dah habis ke idea nak lari tu?" — Kak Limah, sambil tepuk tangan.' },
   { title: 'TERLAMBAT DAH!', sub: 'Husin lari macam kura-kura. Cuba lagi, kali ni laju sikit!' },

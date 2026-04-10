@@ -54,6 +54,7 @@ import spikeTilesImg from './Images/spike-tiles.png'
 import husinWingameImg from './Images/husin-wingame.png'
 import kakLimahMenangImg from './Images/kak-kimahmenang.png'
 import frontPageImg from './Images/front-page.png'
+import blackHoleImg from './Images/black-hole.png'
 
 // Board dimensions
 export const BOARD_SIZE = 8;
@@ -152,6 +153,7 @@ export const SPIKE_TILES_IMG = spikeTilesImg;
 export const HUSIN_WINGAME_IMG = husinWingameImg;
 export const KAK_LIMAH_MENANG_IMG = kakLimahMenangImg;
 export const FRONT_PAGE_IMG = frontPageImg;
+export const BLACK_HOLE_IMG = blackHoleImg;
 
 // Game settings
 export const INITIAL_HP = 3;
@@ -171,7 +173,7 @@ export const TILE_EFFECTS = {
   0: { name: 'Rumput', effect: 'Normal — gerak 1 langkah mana-mana arah' },
   1: { name: 'Tiles Berduri', effect: 'Bahaya — pijak sini -1 HP!' },
   2: { name: 'Lumut', effect: 'Licin — auto-gelincir 1 langkah lagi arah sama' },
-  3: { name: 'Gelap', effect: 'Bayang — Hantu jadi keliru giliran ini' },
+  3: { name: 'Kawasan Gelap', effect: 'Bius Hantu — Kak Limah keliru giliran ini' },
   6: { name: 'Kubur', effect: 'Portal — boleh teleport ke mana-mana kubur lain' },
 };
 

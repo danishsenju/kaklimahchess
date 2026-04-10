@@ -4,6 +4,7 @@ import {
   TEMPAT_SELAMAT_IMG, USOP_WILCHA_IMG, BUKU_PANDUAN_IMG,
   FLAG_TOLONG_IMG, BOMOH_FULLBODY_IMG, SELIPAR_JEPUN_IMG,
   DIR, POWERUP, FRONT_PAGE_IMG, SPIKE_TILES_IMG,
+  LIMAH_BACKGROUND_IMG, BLACK_HOLE_IMG,
 } from '../constants'
 import './MainMenu.css'
 
@@ -26,6 +27,8 @@ export default function MainMenu({ onStart, playClick }) {
   const [titleReady, setTitleReady] = useState(false);
   const [showPress, setShowPress] = useState(false);
   const [menuScale, setMenuScale] = useState(1);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstall, setShowInstall] = useState(false);
 
   const tagline = TAGLINES[taglineIdx];
 
@@ -57,10 +60,24 @@ export default function MainMenu({ onStart, playClick }) {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
+  // PWA install prompt
+  useEffect(() => {
+    const handler = (e) => { e.preventDefault(); setDeferredPrompt(e); setShowInstall(true); };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') { setShowInstall(false); setDeferredPrompt(null); }
+  };
+
   return (
     <div className="main-menu">
       {/* Atmospheric background layers */}
-      <div className="menu-bg-img" style={{ backgroundImage: `url(${FRONT_PAGE_IMG})` }} />
+      <div className="menu-bg-img" style={{ backgroundImage: `url(${LIMAH_BACKGROUND_IMG})` }} />
       <div className="menu-bg-gradient" />
       <div className="menu-fog fog-1" />
       <div className="menu-fog fog-2" />
@@ -126,7 +143,7 @@ export default function MainMenu({ onStart, playClick }) {
         </div>
 
         {/* Character Showcase - Nintendo style */}
-        <div className="menu-showcase">
+        <div className="menu-showcase" style={{ backgroundImage: `url(${FRONT_PAGE_IMG})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
           {/* Husin side */}
           <div className="showcase-char showcase-husin">
             <div className="char-platform" />
@@ -187,6 +204,15 @@ export default function MainMenu({ onStart, playClick }) {
             <span className="btn-text">BUKU PANDUAN</span>
           </button>
         </div>
+
+        {/* PWA Install Banner */}
+        {showInstall && (
+          <div className="pwa-install-banner">
+            <span className="pwa-install-text">📲 Pasang app di telefon!</span>
+            <button className="pwa-install-btn" onClick={handleInstall}>PASANG</button>
+            <button className="pwa-install-close" onClick={() => setShowInstall(false)}>✕</button>
+          </div>
+        )}
 
         <div className="menu-footer">
           <span className="footer-keys">
@@ -311,8 +337,15 @@ export default function MainMenu({ onStart, playClick }) {
                   <div className="guide-item">
                     <img src={SPIKE_TILES_IMG} alt="Duri" className="guide-icon" style={{borderRadius:'4px'}} />
                     <div className="guide-item-text">
-                      <strong>🩸 Tiles Berduri</strong>
+                      <strong>🩸 Kawasan Berduri</strong>
                       <span>Pijak = terus -1 HP! Kak Limah senyum je tengok kau terseksa.</span>
+                    </div>
+                  </div>
+                  <div className="guide-item">
+                    <img src={BLACK_HOLE_IMG} alt="Kawasan Gelap" className="guide-icon" style={{borderRadius:'4px'}} />
+                    <div className="guide-item-text">
+                      <strong>🌑 Kawasan Gelap</strong>
+                      <span>Berdiri sini = Kak Limah terpinga-pinga keliru 1 giliran. Dia jadi lembu kejap!</span>
                     </div>
                   </div>
                 </div>

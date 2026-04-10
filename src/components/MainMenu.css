@@ -1174,3 +1174,57 @@
     font-size: 32px;
   }
 }
+
+/* ===== PWA INSTALL BANNER ===== */
+.pwa-install-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(10, 5, 20, 0.92);
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-top: 4px;
+  animation: bannerSlideIn 0.4s ease-out forwards;
+}
+
+@keyframes bannerSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pwa-install-text {
+  font-family: var(--font-pixel, 'Press Start 2P', monospace);
+  font-size: clamp(0.38rem, 1.5vw, 0.55rem);
+  color: var(--horror-gold, #c9a84c);
+  white-space: nowrap;
+}
+
+.pwa-install-btn {
+  font-family: var(--font-pixel, 'Press Start 2P', monospace);
+  font-size: clamp(0.38rem, 1.5vw, 0.55rem);
+  background: var(--horror-gold, #c9a84c);
+  color: #0a0510;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+.pwa-install-btn:hover { filter: brightness(1.2); }
+
+.pwa-install-close {
+  font-family: var(--font-pixel, 'Press Start 2P', monospace);
+  font-size: 0.6rem;
+  background: transparent;
+  color: rgba(200, 190, 160, 0.6);
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.pwa-install-close:hover { color: #fff; }
